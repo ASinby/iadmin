@@ -234,6 +234,7 @@ function getSeries() {
 }
 
 watch( () => props.chartData, ( newVal ) => {
+  console.log( 'chartData of LineMarker', props.chartData )
   initChart()
 } )
 

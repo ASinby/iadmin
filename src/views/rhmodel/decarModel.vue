@@ -10,26 +10,26 @@
               </div>
               <div class="table-body">
                 <div class="center-col" style="height: 50vh;">
-                  <el-form label-position="right" label-width="100px" :model="settingVal" style="padding: 5px;">
+                  <el-form label-position="right" label-width="100px" :model="baseInfo" style="padding: 5px;">
                     <el-form-item label="处理号">
-                      <el-input v-model="settingVal.useNo"></el-input>
+                      <el-input v-model="baseInfo.treatNo"></el-input>
                     </el-form-item>
                     <el-form-item label="出钢记号">
-                      <el-input v-model="settingVal.steelNo"></el-input>
+                      <el-input v-model="baseInfo.stno"></el-input>
                     </el-form-item>
                     <el-form-item label="开始处理时刻">
-                      <el-input v-model="settingVal.startTm"></el-input>
+                      <el-input v-model="baseInfo.treatStartTm"></el-input>
                     </el-form-item>
                     <el-form-item label="目标OXP">
-                      <el-input v-model="settingVal.aimOXP"></el-input>
+                      <el-input v-model="baseInfo.aimOXP"></el-input>
                     </el-form-item>
                     <el-form-item label="设定吹氧量" style="position: relative">
-                      <el-radio-group v-model="settingVal.setOxyCount">
+                      <el-radio-group v-model="baseInfo.blowO2Mode">
                         <el-radio :label="1">不吹氧</el-radio>
                         <el-radio :label="2">预报量</el-radio>
                         <el-radio :label="3">设定量</el-radio>
                       </el-radio-group>
-                      <el-input v-model="settingVal.oxyCount" style="position: absolute;width: 100px;top: 30px;right: 35px;" v-if="showOxySet"></el-input>
+                      <el-input v-model="baseInfo.setO2" style="position: absolute;width: 100px;top: 30px;right: 35px;" v-if="showOxySet"></el-input>
                     </el-form-item>
                   </el-form>
                   <div class="radio">
@@ -53,21 +53,21 @@
               </div>
               <div class="table-body">
                 <div class="center-col" style="height: 25vh;">
-                  <el-form label-position="right" label-width="100px" :model="settingVal" style="padding: 5px;">
+                  <el-form label-position="right" label-width="100px" :model="baseInfo" style="padding: 5px;">
                     <el-form-item label="程序开始时刻">
-                      <el-input v-model="settingVal.useNo"></el-input>
+                      <el-input v-model="baseInfo.runTm"></el-input>
                     </el-form-item>
                     <el-form-item label="预报吹氧量">
-                      <el-input v-model="settingVal.steelNo"></el-input>
+                      <el-input v-model="baseInfo.forecastO2"></el-input>
                     </el-form-item>
-                    <el-form-item label="处理时间">
-                      <el-input v-model="settingVal.startTm"></el-input>
+                    <el-form-item label="预计处理时长">
+                      <el-input v-model="baseInfo.treatSpan"></el-input>
                     </el-form-item>
                     <el-form-item label="镇静[C]">
-                      <el-input v-model="settingVal.aimOXP"></el-input>
+                      <el-input v-model="baseInfo.killingC"></el-input>
                     </el-form-item>
-                    <el-form-item label="错误">
-                      <el-input v-model="settingVal.oxyCount"></el-input>
+                    <el-form-item label="提醒">
+                      <el-input v-model="baseInfo.tips"></el-input>
                     </el-form-item>
                   </el-form>
                 </div>
@@ -85,24 +85,24 @@
               </div>
               <div class="table-body">
                 <div class="center-col" style="height: 11vh;">
-                  <el-form :inline="true" :model="formInline" class="demo-form-inline">
+                  <el-form :inline="true" :model="baseInfo" class="demo-form-inline">
                     <div class="form-row">
                       <el-form-item label="">
-                        <el-input v-model="formInline.preC" placeholder="处理前[C%]" title="处理前[C%]"></el-input>
+                        <el-input v-model="baseInfo.preC" placeholder="处理前[C%]" title="处理前[C%]"></el-input>
                       </el-form-item>
                       <el-form-item label="">
-                        <el-input v-model="formInline.preOXP" placeholder="处理前[OXP%]" title="处理前[OXP%]"></el-input>
+                        <el-input v-model="baseInfo.preOXP" placeholder="处理前[OXP%]" title="处理前[OXP%]"></el-input>
                       </el-form-item>
                       <el-form-item label="">
-                        <el-input v-model="formInline.targerC" placeholder="目标[C%]" title="目标[C%]"></el-input>
+                        <el-input v-model="baseInfo.aimC" placeholder="目标[C%]" title="目标[C%]"></el-input>
                       </el-form-item>
                     </div>
                     <div class="form-row">
                       <el-form-item label="">
-                        <el-input v-model="formInline.steelW" placeholder="钢水重量[kg]" title="钢水重量[kg]"></el-input>
+                        <el-input v-model="baseInfo.steelWeight" placeholder="钢水重量[kg]" title="钢水重量[kg]"></el-input>
                       </el-form-item>
                       <el-form-item label="">
-                        <el-input v-model="formInline.steelW" placeholder="钢水温度[℃]" title="钢水温度[℃]"></el-input>
+                        <el-input v-model="baseInfo.steelTemp" placeholder="钢水温度[℃]" title="钢水温度[℃]"></el-input>
                       </el-form-item>
                     </div>
                   </el-form>
@@ -114,7 +114,7 @@
         <el-row class="chats-container">
           <el-col :span="24">
             <div class="chart-wrapper chart-container" style="height: 67vh">
-              <LineMarker2 />
+              <LineMarker name="碳、游离氧预报曲线" id="chartCOxy" :chartData="coxyChartData" :xAxisData="chart1XAxis" yVal="ppm" />
             </div>
           </el-col>
         </el-row>
@@ -126,23 +126,23 @@
           </div>
           <div class="table-body">
             <el-table
-                    :data="tableData"
+                    :data="coxyTableData"
                     :header-cell-style="{textAlign: 'center'}"
                     :cell-style="{textAlign: 'center'}"
                     style="width: 100%"
                     height="80vh">
               <el-table-column
-                      prop="date"
+                      prop="tm"
                       label="时间"
                       width="120">
               </el-table-column>
               <el-table-column
-                      prop="name"
+                      prop="cVal"
                       label="碳"
                       width="120">
               </el-table-column>
               <el-table-column
-                      prop="name"
+                      prop="oxyVal"
                       label="游离氧"
                       width="120">
               </el-table-column>
@@ -155,25 +155,86 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref, reactive, watch } from 'vue'
-import LineMarker2 from './components/LineMarker2'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
+import LineMarker from './components/LineMarker'
 import { ElMessage } from 'element-plus'
+import { getBaseInfo, getOutCOxygen } from '/@/api/decarmodel'
 
-const settingVal = reactive( { useNo : '', steelNo : '', startTm : '', aimOXP : '', oxyCount : '', setOxyCount : 1 } )
-const formInline = reactive( { preC : '', preOXP : '', targerC : '', steelW : '', steelT : '' } )
+const baseInfo = ref( { treatNo : '', stno : '', treatStartTm : '', aimOXP : '', setO2 : '', blowO2Mode : 1, runTm : 0, forecastO2 : 99, treatSpan : 0, killingC : 89, tips : 'hi', preC : '', preOXP : '', aimC : '', steelWeight : '', steelTemp : '' } )
+const coxyTableData = ref( [] )
+const chart1XAxis = ref( [] )
+const coxyChartData = ref( [] )
 const showOxySet = ref( false )
 const station = ref( 'A' )
 
 onMounted( () => {
-
+  init()
 } )
 
 onUnmounted( () => {
 
 } )
 
+// 初始化
+function init() {
+  const param = {
+    station1 : station.value
+  }
+  refreBaseInfo( param )
+  refreOutCOxy( param )
+}
+// 刷新基本消息
+async function refreBaseInfo( param ) {
+  try {
+    const { data } = await getBaseInfo( param )
+    baseInfo.value = { data }.data
+  } catch ( e ) {
+
+  } finally {
+
+  }
+}
+// 刷新基本消息
+async function refreOutCOxy( param ) {
+  try {
+    const { data } = await getOutCOxygen( param )
+    // console.log( { data } )
+    coxyTableData.value = { data }.data.tableData
+
+    const tm = []
+    const cVals = []
+    const oxyVals = []
+    coxyTableData.value.forEach( function( value, index, array ) {
+      tm.push( value.tm )
+      cVals.push( value.cVal )
+      oxyVals.push( value.oxyVal )
+    } )
+    chart1XAxis.value = tm
+    coxyChartData.value = [{
+      name : '碳',
+      color : 'rgb(160,114,245)',
+      data : cVals,
+      offset0 : 'rgba(160,114,245,0.27)',
+      offset1 : 'rgba(160,114,245,0)'
+    },
+    {
+      name : '游离氧',
+      color : 'rgb(245,237,91)',
+      data : oxyVals,
+      offset0 : 'rgba(245,237,91,0.27)',
+      offset1 : 'rgba(245,237,91,0)'
+    }]
+    // console.log( coxyChartData.value )
+  } catch ( e ) {
+
+  } finally {
+
+  }
+}
+
 // 刷新按键事件
 function refreBtn() {
+  init()
   ElMessage( {
     message : '刷新成功',
     type : 'success',
@@ -182,6 +243,7 @@ function refreBtn() {
 }
 // 计算按键事件
 function calcBtn() {
+  init()
   ElMessage( {
     message : '计算成功',
     type : 'success',
@@ -190,25 +252,26 @@ function calcBtn() {
 }
 
 // 监听setOxyCount变化 reactive类型数据
-watch( () => settingVal.setOxyCount,
-  ( setOxyCount ) => {
-    // console.log(`setOxyCount is: ${setOxyCount}`)
+watch( () => baseInfo.value.blowO2Mode,
+  ( blowO2Mode ) => {
     // 1不吹氧  2预报量  3设定量
-    if ( setOxyCount === 1 ) {
+    if ( blowO2Mode === 1 ) {
       showOxySet.value = false
-      settingVal.oxyCount = 0
-    } else if ( setOxyCount === 2 ) {
+      baseInfo.value.setO2 = 0
+    } else if ( blowO2Mode === 2 ) {
       showOxySet.value = false
-      settingVal.oxyCount = 1
-    } else if ( setOxyCount === 3 ) {
-      settingVal.oxyCount = ''
+      baseInfo.value.setO2 = baseInfo.value.forecastO2
+    } else if ( blowO2Mode === 3 ) {
+      baseInfo.value.setO2 = ''
       showOxySet.value = true
     }
+    console.log( `blowO2Mode is: ${blowO2Mode}`, baseInfo.value.setO2 )
   } )
 
 // 监听station变化  ref类型数据
 watch( station, ( newX ) => {
   // console.log(`x is ${newX}`)
+  init()
   ElMessage( {
     message : `station is ${newX}`,
     type : 'success',
