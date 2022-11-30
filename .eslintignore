@@ -1,0 +1,16 @@
+build/*.js
+src/assets
+node_modules
+public
+dist
+src/vendor/**/*.js
+src/utils/cropper.js
+src/utils/image-compressor.js
+
+# 忽略代码格式规则位置
+#src/**/*
+
+
+
+
+
