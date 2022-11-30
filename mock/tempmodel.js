@@ -36,6 +36,15 @@ const getTempData = () => {
     offset1 : 'rgba(245,237,91,0)'
   }]
 }
+const getAlloyInfo = () => {
+  // { matCode : '1', matType : '', matName : '', matAmount : '', manualFlag : '' }
+  let result = []
+  let rowsnum = getRandomData( 1, 50 )
+  while ( rowsnum-- > 0 ) {
+    result.push( { matCode : getRandomData( 1, 99999 ), matType : '', matName : '', matAmount : getRandomData( 1, 500 ), manualFlag : '' } )
+  }
+  return result
+}
 export default [
   {
     url: '/api/tempmodel/doCalc',
@@ -77,7 +86,7 @@ export default [
       return {
         code: 200,
         message: 'success',
-        data: ''
+        data: getAlloyInfo()
       }
     }
   },

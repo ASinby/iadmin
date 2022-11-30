@@ -113,7 +113,7 @@
         </el-row>
         <el-row class="chats-container">
           <el-col :span="24">
-            <div class="chart-wrapper chart-container">
+            <div class="chart-wrapper chart-container" style="height: 67vh">
               <LineMarker2 />
             </div>
           </el-col>

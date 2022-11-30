@@ -76,42 +76,37 @@
               </div>
               <div class="table-body">
                 <el-table
-                        :data="tableData"
+                        :data="alloyInfo"
                         :header-cell-style="{textAlign: 'center'}"
                         :cell-style="{textAlign: 'center'}"
                         style="width: 100%"
                         height="25vh">
-                  <!--<el-table-column
+                  <el-table-column
                           fixed
-                          prop="date"
-                          label="日期"
+                          prop="matCode"
+                          label="物料编号"
+                          width="120">
+                  </el-table-column>
+                  <el-table-column
+                          prop="matType"
+                          label="物料类型"
+                          width="120">
+                  </el-table-column>
+                  <el-table-column
+                          prop="matName"
+                          label="物料描述"
                           width="150">
                   </el-table-column>
                   <el-table-column
-                          prop="name"
-                          label="姓名"
+                          prop="matAmount"
+                          label="物料重量"
                           width="120">
                   </el-table-column>
                   <el-table-column
-                          prop="province"
-                          label="省份"
+                          prop="manualFlag"
+                          label="手投料标志"
                           width="120">
                   </el-table-column>
-                  <el-table-column
-                          prop="city"
-                          label="市区"
-                          width="120">
-                  </el-table-column>
-                  <el-table-column
-                          prop="address"
-                          label="地址"
-                          width="300">
-                  </el-table-column>
-                  <el-table-column
-                          prop="zip"
-                          label="邮编"
-                          width="120">
-                  </el-table-column>-->
                 </el-table>
               </div>
             </div>
@@ -251,6 +246,11 @@ const chart1Data = ref( [{
 }] )
 const realTemp = ref( [] )
 const forceTemp = ref( [] )
+const alloyInfo = ref( [
+  { matCode : '1', matType : '', matName : '', matAmount : '', manualFlag : '' },
+  { matCode : '2', matType : '', matName : '', matAmount : '', manualFlag : '' },
+  { matCode : '3', matType : '', matName : '', matAmount : '', manualFlag : '' }
+] )
 
 onMounted( () => {
   init()
@@ -284,13 +284,13 @@ function init() {
 }
 async function refreBaseInfo( param ) {
   const result = await getBaseInfo( { param } )
-  console.log( result )
+  // console.log( result )
   baseInfo.value = result.data
 }
 async function refreTempData( param ) {
   try {
     const { data } = await getTempData( { param } )
-    console.log( { data }.data )
+    // console.log( { data }.data )
     chart1Data.value = { data }.data
 
     realTemp.value = []
@@ -318,13 +318,13 @@ async function refreTempData( param ) {
 }
 async function refreAlloyInfo( param ) {
   const { data } = await getAlloyInfo( { param } )
-  console.log( { data } )
-  // baseInfo.value = data.data
+  // console.log( { data } )
+  alloyInfo.value = { data }.data
 }
 async function refreBlastOxyInfo( param ) {
   const { data } = await getBlastOxyInfo( { param } )
   console.log( { data } )
-  // baseInfo.value = data.data
+  // baseInfo.value = { data }.data
 }
 
 // 刷新按键事件
