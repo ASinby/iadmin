@@ -11,39 +11,39 @@
       </el-col>
       <el-col :span="18">
         <div class="city-selected-body">
-          <el-form :inline="true" :model="formInline" class="demo-form-inline">
+          <el-form :inline="true" :model="baseInfo" class="demo-form-inline">
             <div class="form-row">
               <el-form-item label="">
-                <el-input v-model="formInline.useNo" placeholder="处理号" title="处理号"></el-input>
+                <el-input v-model="baseInfo.treatNo" placeholder="处理号" title="处理号"></el-input>
               </el-form-item>
               <el-form-item label="">
-                <el-input v-model="formInline.ldStatus" placeholder="钢包状态" title="钢包状态"></el-input>
+                <el-input v-model="baseInfo.stStatus" placeholder="钢包状态" title="钢包状态"></el-input>
               </el-form-item>
               <el-form-item label="">
-                <el-input v-model="formInline.useSteel" placeholder="投入冷材" title="投入冷材"></el-input>
+                <el-input v-model="baseInfo.alloyAddWeight" placeholder="投入冷材" title="投入冷材"></el-input>
               </el-form-item>
               <el-form-item label="">
-                <el-input v-model="formInline.temp" placeholder="温度[℃]" title="温度[℃]"></el-input>
+                <el-input v-model="baseInfo.vacTankTemp" placeholder="温度[℃]" title="温度[℃]"></el-input>
               </el-form-item>
               <el-form-item label="">
-                <el-input v-model="formInline.startTm" placeholder="处理开始时刻" title="处理开始时刻"></el-input>
+                <el-input v-model="baseInfo.treatStartTm" placeholder="处理开始时刻" title="处理开始时刻"></el-input>
               </el-form-item>
             </div>
             <div class="form-row">
               <el-form-item label="">
-                <el-input v-model="formInline.steelNo" placeholder="出钢记号" title="出钢记号"></el-input>
+                <el-input v-model="baseInfo.stno" placeholder="出钢记号" title="出钢记号"></el-input>
               </el-form-item>
               <el-form-item label="">
-                <el-input v-model="formInline.steelWe" placeholder="钢水重量[Kg]" title="钢水重量[Kg]"></el-input>
+                <el-input v-model="baseInfo.steelWeight" placeholder="钢水重量[Kg]" title="钢水重量[Kg]"></el-input>
               </el-form-item>
               <el-form-item label="">
-                <el-input v-model="formInline.useDur" placeholder="计划处理时间[0.1分]" title="计划处理时间[0.1分]"></el-input>
+                <el-input v-model="baseInfo.treatSpan" placeholder="计划处理时长[0.1分]" title="计划处理时长[0.1分]"></el-input>
               </el-form-item>
               <el-form-item label="">
-                <el-input v-model="formInline.oxyCount" placeholder="吹氧量" title="吹氧量"></el-input>
+                <el-input v-model="baseInfo.setO2" placeholder="吹氧量" title="吹氧量"></el-input>
               </el-form-item>
               <el-form-item label="">
-                <el-input v-model="formInline.endTm" placeholder="处理结束时刻" title="处理结束时刻"></el-input>
+                <el-input v-model="baseInfo.treatEndTm" placeholder="处理结束时刻" title="处理结束时刻"></el-input>
               </el-form-item>
             </div>
           </el-form>
@@ -216,14 +216,15 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, reactive, ref, watch } from 'vue'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
+import { getActualTemp, getAlloyInfo, getAlloyInfoOfPlan, getBaseInfo, getBlowingOxygen } from '/@/api/tempforecast'
 
 const station = ref( 'A' )
-const formInline = reactive( { useNo : '', ldStatus : '', temp : '', useSteel : '', startTm : '', steelNo : '', steelWe : '', useDur : '', oxyCount : '', endTm : '' } )
+const baseInfo = ref( { treatNo : '', stStatus : '', vacTankTemp : '', alloyAddWeight : '', treatStartTm : '', stno : '', steelWeight : '', treatSpan : '', setO2 : '', treatEndTm : '' } )
 
 onMounted( () => {
-
+  init()
 } )
 
 onUnmounted( () => {
@@ -232,15 +233,83 @@ onUnmounted( () => {
 
 // 监听station变化  ref类型数据
 watch( station, ( newX ) => {
+  init()
   ElMessage( {
     message : `station is ${newX}`,
     type : 'success',
     duration : 2 * 1000
   } )
 } )
+// 初始化
+function init() {
+  const param = {
+    station1 : station.value
+  }
+  refreBaseInfo( param )
+  refreO2Info( param )
+  refreAlloyInfo( param )
+  refreRealTempInfo( param )
+  refrePlanUseAlloy( param )
+}
+// 刷新基本炉次消息
+async function refreBaseInfo( param ) {
+  try {
+    const { data } = await getBaseInfo( param )
+    baseInfo.value = { data }.data
+  } catch ( e ) {
+
+  } finally {
+
+  }
+}
+// 吹氧信息
+async function refreO2Info( param ) {
+  try {
+    const { data } = await getBlowingOxygen( param )
+    console.log( { data } )
+  } catch ( e ) {
+
+  } finally {
+
+  }
+}
+// 合金信息
+async function refreAlloyInfo( param ) {
+  try {
+    const { data } = await getAlloyInfo( param )
+    console.log( { data } )
+  } catch ( e ) {
+
+  } finally {
+
+  }
+}
+// 实测温度信息
+async function refreRealTempInfo( param ) {
+  try {
+    const { data } = await getActualTemp( param )
+    console.log( { data } )
+  } catch ( e ) {
+
+  } finally {
+
+  }
+}
+// 计划投入合金信息
+async function refrePlanUseAlloy( param ) {
+  try {
+    const { data } = await getAlloyInfoOfPlan( param )
+    console.log( { data } )
+  } catch ( e ) {
+
+  } finally {
+
+  }
+}
 
 // 刷新按键事件
 function refreBtn() {
+  init()
   ElMessage( {
     message : '刷新成功',
     type : 'success',
@@ -249,6 +318,7 @@ function refreBtn() {
 }
 // 计算按键事件
 function calcBtn() {
+  init()
   ElMessage( {
     message : '计算成功',
     type : 'success',
