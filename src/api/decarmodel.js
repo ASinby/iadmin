@@ -8,7 +8,7 @@ import http from '/@/utils/request'
 export function doCalc( param ) {
   return http.request( {
     method : 'post',
-    url : '/decarmodel/doCalc',
+    url : '/doCalc',
     param
   } )
 }
@@ -21,7 +21,7 @@ export function doCalc( param ) {
 export function getBaseInfo( param ) {
   return http.request( {
     method : 'get',
-    url : '/decarmodel/getBaseInfo',
+    url : '/getBaseInfo',
     param
   } )
 }
@@ -47,7 +47,7 @@ export function getOutCOxygen( param ) {
 export function updateOxygenNums( param ) {
   return http.request( {
     method : 'post',
-    url : '/alloymin/updateOxygenNums',
+    url : '/decarmodel/updateOxygenNums',
     param
   } )
 }

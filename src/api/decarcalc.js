@@ -8,7 +8,20 @@ import http from '/@/utils/request'
 export function doCalc( param ) {
   return http.request( {
     method : 'post',
-    url : '/decarcalc/doCalc',
+    url : '/doCalc',
+    param
+  } )
+}
+
+/**
+ * 获取动态模型输入量与设定值
+ * @param param 工位号
+ * @returns {*}
+ */
+export function getBaseInfo( param ) {
+  return http.request( {
+    method : 'get',
+    url : '/getBaseInfo',
     param
   } )
 }
@@ -35,19 +48,6 @@ export function getChart2Data( param ) {
   return http.request( {
     method : 'get',
     url : '/decarcalc/getOutCoxy',
-    param
-  } )
-}
-
-/**
- * 获取动态模型输入量与设定值
- * @param param 工位号
- * @returns {*}
- */
-export function getBaseInfo( param ) {
-  return http.request( {
-    method : 'get',
-    url : '/decarcalc/getBaseInfo',
     param
   } )
 }

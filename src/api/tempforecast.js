@@ -8,7 +8,7 @@ import http from '/@/utils/request'
 export function doCalc( param ) {
   return http.request( {
     method : 'post',
-    url : '/tempforecast/doCalc',
+    url : '/doCalc',
     param
   } )
 }
@@ -21,7 +21,7 @@ export function doCalc( param ) {
 export function getBaseInfo( param ) {
   return http.request( {
     method : 'get',
-    url : '/tempforecast/getBaseInfo',
+    url : '/getBaseInfo',
     param
   } )
 }
