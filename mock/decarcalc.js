@@ -1,50 +1,53 @@
-const getRandomData = () => {
-  let nums = 12
-  let result = []
-  while (nums-- > 0) {
-    result.push( Math.floor( Math.random()*1000 ) )
+/**
+ * 生成随机数
+ * @param n 个数
+ * @param max 最大值
+ * @returns {[]}
+ */
+const getRandomData = ( n, max ) => {
+  if ( n > 1 ) {
+    let result = []
+    while (n-- > 0) {
+      result.push( Math.floor( Math.random() * max ) )
+    }
+    return result
+  }else if ( n === 1 ) {
+    return Math.floor( Math.random() * max )
   }
-  return result
+
+  return -1
 }
 
 const getChart1Data = () => {
-  return [{
-    name : 'CO',
-    color : 'rgb(160,114,245)',
-    data : getRandomData(),
-    xData : ['13:00', '13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35', '13:40', '13:45', '13:50', '13:55'],
-    offset0 : 'rgba(160,114,245,0.27)',
-    offset1 : 'rgba(160,114,245,0)'
-  },
-    {
-      name : 'CO2',
-      color : 'rgb(245,237,91)',
-      data : getRandomData(),
-      xData : ['13:00', '13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35', '13:40', '13:45', '13:50', '13:55'],
-      offset0 : 'rgba(245,237,91,0.27)',
-      offset1 : 'rgba(245,237,91,0)'
-    },
-    {
-      name : 'O2',
-      color : 'rgb(103,245,208)',
-      data : getRandomData(),
-      xData : ['13:00', '13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35', '13:40', '13:45', '13:50', '13:55'],
-      offset0 : 'rgba(103,245,208,0.27)',
-      offset1 : 'rgba(103,245,208,0.1)'
-    }]
+  let result = []
+  let tms = ['13:00', '13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35', '13:40', '13:45', '13:50', '13:55']
+
+  tms.forEach( function( value, index ) {
+    result.push( {
+      tm : value,
+      co : getRandomData( 1, 500 ),
+      co2 : getRandomData( 1, 500 ),
+      o2 : getRandomData( 1, 500 )
+    } )
+  } )
+
+  return result
 }
 const getChart2Data = () => {
-  return [{
-    name : 'C',
-    color : 'rgb(160,114,245)',
-    data : getRandomData(),
-    xData : ['13:00', '13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35', '13:40', '13:45', '13:50', '13:55'],
-    offset0 : 'rgba(160,114,245,0.27)',
-    offset1 : 'rgba(160,114,245,0)'
-  }]
+  let result = []
+  let tms = ['13:00', '13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35', '13:40', '13:45', '13:50', '13:55']
+
+  tms.forEach( function( value, index ) {
+    result.push( {
+      tm : value,
+      cVal : getRandomData( 1, 500 )
+    } )
+  } )
+
+  return result
 }
-const getSettingVal = () => {
-  return { treatNo : '123456', treatStartTm : '', steelWeight : '', preC : '', aimCUpper : '',
+const getBaseInfo = () => {
+  return { treatNo : getRandomData( 1, 999999 ), treatStartTm : '', steelWeight : '', preC : '', aimCUpper : '',
     aimCFloor : '', aimC : '', duringCTm : '', duringC : '', steelTemp : '', oxyVal : '', errorMsg : '' }
 }
 
@@ -56,12 +59,12 @@ export default [
       return {
         code: 200,
         message: 'success',
-        data: getSettingVal()
+        data: getBaseInfo()
       }
     }
   },
   {
-    url: '/api/decarcalc/getChart1Data',
+    url: '/api/decarcalc/getGasFlowRate',
     type: 'get',
     response: config => {
       return {
@@ -72,7 +75,7 @@ export default [
     }
   },
   {
-    url: '/api/decarcalc/getChart2Data',
+    url: '/api/decarcalc/getOutCoxy',
     type: 'get',
     response: config => {
       return {
@@ -83,13 +86,13 @@ export default [
     }
   },
   {
-    url: '/api/decarcalc/getSettingVal',
+    url: '/api/decarcalc/getBaseInfo',
     type: 'get',
     response: config => {
       return {
         code: 200,
         message: 'success',
-        data: getSettingVal()
+        data: getBaseInfo()
       }
     }
   }

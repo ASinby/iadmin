@@ -23,33 +23,13 @@ const getBaseInfo = () => {
   return { treatNo : getRandomData( 1, 999999 ), stStatus : '', vacTankTemp : '', alloyAddWeight : '', treatStartTm : '',
     stno : '', steelWeight : '', treatSpan : '', setO2 : '', treatEndTm : '' }
 }
-const getOutCOxygenData = () => {
-  let tabledata = []
-  tm.forEach(function(value, index) {
-    tabledata.push( {
-      tm : value,
-      cVal : getRandomData( 1, 3000 ),
-      oxyVal : getRandomData( 1, 3000 )
-    } )
-  })
-  let result = {
-    tableData : tabledata,
-    chartData : [{
-      name : '碳',
-      color : 'rgb(160,114,245)',
-      data : getRandomData( 12, 2000 ),
-      offset0 : 'rgba(160,114,245,0.27)',
-      offset1 : 'rgba(160,114,245,0)'
-    },
-    {
-      name : '游离氧',
-      color : 'rgb(245,237,91)',
-      data : getRandomData( 12, 2000 ),
-      offset0 : 'rgba(245,237,91,0.27)',
-      offset1 : 'rgba(245,237,91,0)'
-    }]
+const getAlloyInfoData = () => {
+  let result = []
+  let rowsnum = getRandomData( 1, 100 )
+  while( rowsnum-- > 0 ) {
+    result.push( { matCode : getRandomData( 1, 200 ), matType : '', matName : '', matAmount : getRandomData( 1, 2000 ), manualFlag : '' } )
   }
-  
+
   return result
 }
 export default [
@@ -93,7 +73,7 @@ export default [
       return {
         code: 200,
         message: 'success',
-        data: []
+        data: getAlloyInfoData()
       }
     }
   },

@@ -14,27 +14,25 @@ const getRandomData = ( n, max ) => {
   }else if ( n === 1 ) {
     return Math.floor( Math.random() * max )
   }
-  
+
   return -1
 }
 const getBaseInfo = () => {
   return { treatNo : getRandomData( 1, 9999999 ), stStatus : '', vacTankTemp : '', vacTankAlAdd : '', treatStartTm : '', stno : '', steelWeight : getRandomData( 1, 250 ), treatSpan : '', vacTankTempAdd : '', treatEndTm : '' }
 }
 const getTempData = () => {
-  return [{
-    name : '实际',
-    color : 'rgb(160,114,245)',
-    data : getRandomData( 12, 2000 ),
-    offset0 : 'rgba(160,114,245,0.27)',
-    offset1 : 'rgba(160,114,245,0)'
-  },
-  {
-    name : '预测',
-    color : 'rgb(245,237,91)',
-    data : getRandomData( 12, 2000 ),
-    offset0 : 'rgba(245,237,91,0.27)',
-    offset1 : 'rgba(245,237,91,0)'
-  }]
+  let result = []
+  let tms = ['13:00', '13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35', '13:40', '13:45', '13:50', '13:55']
+
+  tms.forEach( function( value, index ) {
+    result.push( {
+      id : value,
+      tempPre : getRandomData( 1, 500 ),
+      tempAct : getRandomData( 1, 500 )
+    } )
+  } )
+
+  return result
 }
 const getAlloyInfo = () => {
   // { matCode : '1', matType : '', matName : '', matAmount : '', manualFlag : '' }

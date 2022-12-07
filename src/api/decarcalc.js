@@ -21,7 +21,7 @@ export function doCalc( param ) {
 export function getChart1Data( param ) {
   return http.request( {
     method : 'get',
-    url : '/decarcalc/getChart1Data',
+    url : '/decarcalc/getGasFlowRate',
     param
   } )
 }
@@ -34,7 +34,7 @@ export function getChart1Data( param ) {
 export function getChart2Data( param ) {
   return http.request( {
     method : 'get',
-    url : '/decarcalc/getChart2Data',
+    url : '/decarcalc/getOutCoxy',
     param
   } )
 }
@@ -44,10 +44,10 @@ export function getChart2Data( param ) {
  * @param param 工位号
  * @returns {*}
  */
-export function getSettingVal( param ) {
+export function getBaseInfo( param ) {
   return http.request( {
     method : 'get',
-    url : '/decarcalc/getSettingVal',
+    url : '/decarcalc/getBaseInfo',
     param
   } )
 }

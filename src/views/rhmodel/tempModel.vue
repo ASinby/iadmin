@@ -163,53 +163,32 @@
       </el-col>
       <el-col :xs="8" :sm="8" :lg="8">
         <el-row>
-          <el-col :xs="12" :sm="12" :lg="12" style="padding-right: 10px;">
+          <el-col :span="24" style="padding-right: 10px;">
             <div class="table-container">
               <div class="table-head">
-                <div class="table-head-title">实测温度</div>
+                <div class="table-head-title">温度</div>
                 </div>
               <div class="table-body">
                 <el-table
-                        :data="realTemp"
+                        :data="tempData"
                         :header-cell-style="{textAlign: 'center'}"
                         :cell-style="{textAlign: 'center'}"
                         style="width: 100%"
                         height="68vh">
                   <el-table-column
-                          prop="tm"
+                          prop="id"
                           label="时间"
-                          width="120">
+                          width="170">
                   </el-table-column>
                   <el-table-column
-                          prop="temp"
-                          label="温度"
-                          width="120">
-                  </el-table-column>
-                </el-table>
-              </div>
-            </div>
-          </el-col>
-          <el-col :xs="12" :sm="12" :lg="12" style="padding-left: 10px;">
-            <div class="table-container">
-              <div class="table-head">
-                <div class="table-head-title">预报温度</div>
-              </div>
-              <div class="table-body">
-                <el-table
-                        :data="forceTemp"
-                        :header-cell-style="{textAlign: 'center'}"
-                        :cell-style="{textAlign: 'center'}"
-                        style="width: 100%"
-                        height="68vh">
-                  <el-table-column
-                          prop="tm"
-                          label="时间"
-                          width="120">
+                          prop="tempPre"
+                          label="预测温度"
+                          width="170">
                   </el-table-column>
                   <el-table-column
-                          prop="temp"
-                          label="温度"
-                          width="120">
+                          prop="tempAct"
+                          label="实际温度"
+                          width="170">
                   </el-table-column>
                 </el-table>
               </div>
@@ -229,6 +208,8 @@ import { getBaseInfo, getTempData, getAlloyInfo, getBlastOxyInfo } from '/@/api/
 
 const station = ref( 'A' )
 const baseInfo = ref( { treatNo : '', stStatus : '', vacTankTemp : '', vacTankAlAdd : '', treatStartTm : '', stno : '', steelWeight : '', treatSpan : '', vacTankTempAdd : '', treatEndTm : '' } )
+
+const tempData = ref( [] )
 const chart1XAxis = ref( ['13:00', '13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35', '13:40', '13:45', '13:50', '13:55'] )
 const chart1Data = ref( [{
   name : '实际',
@@ -244,8 +225,6 @@ const chart1Data = ref( [{
   offset0 : 'rgba(245,237,91,0.27)',
   offset1 : 'rgba(245,237,91,0)'
 }] )
-const realTemp = ref( [] )
-const forceTemp = ref( [] )
 const alloyInfo = ref( [
   { matCode : '1', matType : '', matName : '', matAmount : '', manualFlag : '' },
   { matCode : '2', matType : '', matName : '', matAmount : '', manualFlag : '' },
@@ -283,33 +262,27 @@ function init() {
   refreBlastOxyInfo( param )
 }
 async function refreBaseInfo( param ) {
-  const result = await getBaseInfo( { param } )
+  const result = await getBaseInfo( param )
   // console.log( result )
   baseInfo.value = result.data
 }
 async function refreTempData( param ) {
   try {
-    const { data } = await getTempData( { param } )
+    const { data } = await getTempData( param )
     // console.log( { data }.data )
-    chart1Data.value = { data }.data
+    tempData.value = { data }.data
 
-    realTemp.value = []
-    forceTemp.value = []
-    chart1Data.value.forEach( function( item, index ) {
-      item.data.forEach( function( val, nn ) {
-        if ( item.name === '实际' ) {
-          realTemp.value.push( {
-            tm : chart1XAxis.value[nn],
-            temp : val
-          } )
-        } else if ( item.name === '预测' ) {
-          forceTemp.value.push( {
-            tm : chart1XAxis.value[nn],
-            temp : val
-          } )
-        }
-      } )
+    const tm = []
+    const tempActs = []
+    const tempPres = []
+    tempData.value.forEach( function( value, index ) {
+      tm.push( value.id )
+      tempActs.push( value.tempAct )
+      tempPres.push( value.tempPre )
     } )
+
+    chart1XAxis.value = tm
+    chart1Data.value = chart1FormatData( tempActs, tempPres )
   } catch ( e ) {
 
   } finally {
@@ -317,12 +290,12 @@ async function refreTempData( param ) {
   }
 }
 async function refreAlloyInfo( param ) {
-  const { data } = await getAlloyInfo( { param } )
+  const { data } = await getAlloyInfo( param )
   // console.log( { data } )
   alloyInfo.value = { data }.data
 }
 async function refreBlastOxyInfo( param ) {
-  const { data } = await getBlastOxyInfo( { param } )
+  const { data } = await getBlastOxyInfo( param )
   console.log( { data } )
   // baseInfo.value = { data }.data
 }
@@ -344,6 +317,29 @@ function calcBtn() {
     type : 'success',
     duration : 3 * 1000
   } )
+}
+
+/**
+ * 温度趋势图数据格式
+ * @param tempActs
+ * @param tempPres
+ * @returns {({color: string, data: *, name: string, offset0: string, offset1: string}|{color: string, data: *, name: string, offset0: string, offset1: string})[]}
+ */
+function chart1FormatData( tempActs, tempPres ) {
+  return [{
+    name : '实际',
+    color : 'rgb(160,114,245)',
+    data : tempActs,
+    offset0 : 'rgba(160,114,245,0.27)',
+    offset1 : 'rgba(160,114,245,0)'
+  },
+  {
+    name : '预测',
+    color : 'rgb(245,237,91)',
+    data : tempPres,
+    offset0 : 'rgba(245,237,91,0.27)',
+    offset1 : 'rgba(245,237,91,0)'
+  }]
 }
 
 defineOptions( {

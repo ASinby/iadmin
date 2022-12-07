@@ -1,5 +1,5 @@
 const defaultSetting = {
-  title : '三叶草',
+  title : 'RH模型',
   showSettings : true,
   tagsView : true,
   fixedHeader : true,

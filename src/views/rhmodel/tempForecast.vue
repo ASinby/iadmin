@@ -112,48 +112,38 @@
             <div class="table-head-title">合金信息</div>
           </div>
           <div class="table-body">
-            <el-table :data="tableData"
+            <el-table :data="alloyInfo"
                       :header-cell-style="{textAlign: 'center'}"
                       :cell-style="{textAlign: 'center'}"
                       style="width: 100%"
                       height="35vh">
-            </el-table>
-            <!--<el-table
-                    :data="tableData"
-                    style="width: 100%"
-                    height="250">
               <el-table-column
                       fixed
-                      prop="date"
-                      label="日期"
+                      prop="matCode"
+                      label="物料编号"
+                      width="120">
+              </el-table-column>
+              <el-table-column
+                      prop="matType"
+                      label="物料类型"
+                      width="120">
+              </el-table-column>
+              <el-table-column
+                      prop="matName"
+                      label="物料描述"
                       width="150">
               </el-table-column>
               <el-table-column
-                      prop="name"
-                      label="姓名"
+                      prop="matAmount"
+                      label="物料重量"
                       width="120">
               </el-table-column>
               <el-table-column
-                      prop="province"
-                      label="省份"
+                      prop="manualFlag"
+                      label="手投料标志"
                       width="120">
               </el-table-column>
-              <el-table-column
-                      prop="city"
-                      label="市区"
-                      width="120">
-              </el-table-column>
-              <el-table-column
-                      prop="address"
-                      label="地址"
-                      width="300">
-              </el-table-column>
-              <el-table-column
-                      prop="zip"
-                      label="邮编"
-                      width="120">
-              </el-table-column>
-            </el-table>-->
+            </el-table>
           </div>
         </div>
       </el-col>
@@ -164,21 +154,21 @@
           </div>
           <div class="table-body">
             <el-table
-                    :data="tableData"
+                    :data="realTemp"
                     :header-cell-style="{textAlign: 'center'}"
                     :cell-style="{textAlign: 'center'}"
                     style="width: 100%"
                     height="35vh">
-              <!--<el-table-column
-                      prop="date"
+              <el-table-column
+                      prop="id"
                       label="时间"
-                      width="120">
+                      width="260">
               </el-table-column>
               <el-table-column
-                      prop="name"
+                      prop="tempAct"
                       label="温度"
-                      width="120">
-              </el-table-column>-->
+                      width="260">
+              </el-table-column>
             </el-table>
           </div>
         </div>
@@ -222,7 +212,14 @@ import { getActualTemp, getAlloyInfo, getAlloyInfoOfPlan, getBaseInfo, getBlowin
 
 const station = ref( 'A' )
 const baseInfo = ref( { treatNo : '', stStatus : '', vacTankTemp : '', alloyAddWeight : '', treatStartTm : '', stno : '', steelWeight : '', treatSpan : '', setO2 : '', treatEndTm : '' } )
-
+// 合金信息
+const alloyInfo = ref( [
+  { matCode : '1', matType : '', matName : '', matAmount : '', manualFlag : '' },
+  { matCode : '2', matType : '', matName : '', matAmount : '', manualFlag : '' },
+  { matCode : '3', matType : '', matName : '', matAmount : '', manualFlag : '' }
+] )
+// 实测温度
+const realTemp = ref( [{ id : '10:12', tempAct : 1600 }, { id : '10:12', tempAct : 1600 }] )
 onMounted( () => {
   init()
 } )
@@ -266,7 +263,7 @@ async function refreBaseInfo( param ) {
 async function refreO2Info( param ) {
   try {
     const { data } = await getBlowingOxygen( param )
-    console.log( { data } )
+    console.log( '吹氧信息', { data } )
   } catch ( e ) {
 
   } finally {
@@ -277,7 +274,8 @@ async function refreO2Info( param ) {
 async function refreAlloyInfo( param ) {
   try {
     const { data } = await getAlloyInfo( param )
-    console.log( { data } )
+    console.log( '合金信息', { data } )
+    alloyInfo.value = { data }.data
   } catch ( e ) {
 
   } finally {
@@ -288,7 +286,8 @@ async function refreAlloyInfo( param ) {
 async function refreRealTempInfo( param ) {
   try {
     const { data } = await getActualTemp( param )
-    console.log( { data } )
+    console.log( '实测温度信息', { data } )
+    realTemp.value = { data }.data
   } catch ( e ) {
 
   } finally {
@@ -299,7 +298,7 @@ async function refreRealTempInfo( param ) {
 async function refrePlanUseAlloy( param ) {
   try {
     const { data } = await getAlloyInfoOfPlan( param )
-    console.log( { data } )
+    console.log( '计划投入合金信息', { data } )
   } catch ( e ) {
 
   } finally {

@@ -171,7 +171,7 @@ function loginHandle() {
           params.captchaId = captchaId.value
           params.captchaValue = formState.captcha
         }
-        const { data } = await login( { params } )
+        const { data } = await login( params )
         const { token } = data
         userStore.SET_TOKEN( token )
         router.push( '/' )

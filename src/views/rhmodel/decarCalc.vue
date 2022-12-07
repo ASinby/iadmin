@@ -38,42 +38,42 @@
           </div>
 
           <div style="padding: 8px;">
-            <el-form :label-position="left" label-width="120px" :model="settingVal">
+            <el-form :label-position="left" label-width="120px" :model="baseInfo">
               <el-form-item label="处理号">
-                <el-input v-model="settingVal.treatNo"></el-input>
+                <el-input v-model="baseInfo.treatNo"></el-input>
               </el-form-item>
               <el-form-item label="处理开始时刻">
-                <el-input v-model="settingVal.treatStartTm"></el-input>
+                <el-input v-model="baseInfo.treatStartTm"></el-input>
               </el-form-item>
               <el-form-item label="钢水重量[kg]">
-                <el-input v-model="settingVal.steelWeight"></el-input>
+                <el-input v-model="baseInfo.steelWeight"></el-input>
               </el-form-item>
               <el-form-item label="初始C含量[%]">
-                <el-input v-model="settingVal.preC"></el-input>
+                <el-input v-model="baseInfo.preC"></el-input>
               </el-form-item>
               <el-form-item label="目标C上限[%]">
-                <el-input v-model="settingVal.aimCUpper"></el-input>
+                <el-input v-model="baseInfo.aimCUpper"></el-input>
               </el-form-item>
               <el-form-item label="目标C下限[%]">
-                <el-input v-model="settingVal.aimCFloor"></el-input>
+                <el-input v-model="baseInfo.aimCFloor"></el-input>
               </el-form-item>
               <el-form-item label="目标C[%]">
-                <el-input v-model="settingVal.aimC"></el-input>
+                <el-input v-model="baseInfo.aimC"></el-input>
               </el-form-item>
               <el-form-item label="过程碳取样时刻">
-                <el-input v-model="settingVal.duringCTm"></el-input>
+                <el-input v-model="baseInfo.duringCTm"></el-input>
               </el-form-item>
               <el-form-item label="过程C含量[%]">
-                <el-input v-model="settingVal.duringC"></el-input>
+                <el-input v-model="baseInfo.duringC"></el-input>
               </el-form-item>
               <el-form-item label="钢水温度[℃]">
-                <el-input v-model="settingVal.steelTemp"></el-input>
+                <el-input v-model="baseInfo.steelTemp"></el-input>
               </el-form-item>
               <el-form-item label="最新游离氧">
-                <el-input v-model="settingVal.oxyVal"></el-input>
+                <el-input v-model="baseInfo.oxyVal"></el-input>
               </el-form-item>
               <el-form-item label="错误">
-                <el-input v-model="settingVal.errorMsg"></el-input>
+                <el-input v-model="baseInfo.errorMsg"></el-input>
               </el-form-item>
             </el-form>
           </div>
@@ -99,10 +99,12 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
-import { doCalc, getSettingVal, getChart1Data, getChart2Data } from '/@/api/decarcalc'
+import { doCalc, getBaseInfo, getChart1Data, getChart2Data } from '/@/api/decarcalc'
 import LineMarker from './components/LineMarker'
 
 const station = ref( 'A' )
+
+const chart1 = ref( null )
 const chart1XAxis = ref( ['13:00', '13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35', '13:40', '13:45', '13:50', '13:55'] )
 const chart1Data = ref( [{
   name : 'CO',
@@ -125,6 +127,7 @@ const chart1Data = ref( [{
   offset0 : 'rgba(103,245,208,0.27)',
   offset1 : 'rgba(103,245,208,0.1)'
 }] )
+const chart2 = ref( null )
 const chart2XAxis = ref( ['13:00', '13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35', '13:40', '13:45', '13:50', '13:55'] )
 const chart2Data = ref( [
   {
@@ -135,7 +138,7 @@ const chart2Data = ref( [
     offset1 : 'rgba(160,114,245,0)'
   }
 ] )
-const settingVal = ref( { treatNo : '', treatStartTm : '', steelWeight : '', preC : '', aimCUpper : '',
+const baseInfo = ref( { treatNo : '', treatStartTm : '', steelWeight : '', preC : '', aimCUpper : '',
   aimCFloor : '', aimC : '', duringCTm : '', duringC : '', steelTemp : '', oxyVal : '', errorMsg : '' } )
 
 onMounted( () => {
@@ -146,8 +149,8 @@ watch( station, ( newVal ) => {
   const param = {
     station1 : newVal
   }
-  console.log( param )
-  refreSettingVal( param )
+  // console.log( param )
+  refrebaseInfo( param )
   refreWasteGas( param )
   refreOutCoxy( param )
 } )
@@ -157,7 +160,7 @@ function init() {
     station1 : station.value
   }
 
-  refreSettingVal( param )
+  refrebaseInfo( param )
   refreWasteGas( param )
   refreOutCoxy( param )
 }
@@ -167,7 +170,7 @@ function refreBtn() {
     station1 : station.value
   }
 
-  refreSettingVal( param )
+  refrebaseInfo( param )
   refreWasteGas( param )
   refreOutCoxy( param )
 }
@@ -175,7 +178,7 @@ async function calcBtn() {
   try {
     const param = {
       station1 : station.value,
-      data : settingVal.value
+      data : baseInfo.value
     }
     const { data } = await doCalc( param )
     console.log( { data } )
@@ -194,10 +197,24 @@ async function calcBtn() {
 // 刷新废气流量
 async function refreWasteGas( param ) {
   try {
-    const { data } = await getChart1Data( { param } )
+    const { data } = await getChart1Data( param )
 
     // console.log( { data }.data )
-    chart1Data.value = { data }.data
+    chart1.value = { data }.data
+
+    const tm = []
+    const coVals = []
+    const co2Vals = []
+    const o2Vals = []
+    chart1.value.forEach( function( value, index ) {
+      tm.push( value.tm )
+      coVals.push( value.co )
+      co2Vals.push( value.co2 )
+      o2Vals.push( value.o2 )
+    } )
+
+    chart1XAxis.value = tm
+    chart1Data.value = chart1FormatData( coVals, co2Vals, o2Vals )
   } catch ( e ) {
 
   } finally {
@@ -207,10 +224,20 @@ async function refreWasteGas( param ) {
 // 刷新脱碳量
 async function refreOutCoxy( param ) {
   try {
-    const { data } = await getChart2Data( { param } )
+    const { data } = await getChart2Data( param )
 
     // console.log( { data }.data )
-    chart2Data.value = { data }.data
+    chart2.value = { data }.data
+
+    const tm = []
+    const cVals = []
+    chart2.value.forEach( function( value, index ) {
+      tm.push( value.tm )
+      cVals.push( value.cVal )
+    } )
+
+    chart1XAxis.value = tm
+    chart2Data.value = chart2FormatData( cVals )
   } catch ( e ) {
 
   } finally {
@@ -218,17 +245,65 @@ async function refreOutCoxy( param ) {
   }
 }
 // 设定值
-async function refreSettingVal( param ) {
+async function refrebaseInfo( param ) {
   try {
-    const { data } = await getSettingVal( { param } )
+    const { data } = await getBaseInfo( param )
 
     // console.log( { data } )
-    settingVal.value = { data }.data
+    baseInfo.value = { data }.data
   } catch ( e ) {
 
   } finally {
 
   }
+}
+
+/**
+ * 废气流量趋势图数据格式
+ * @param coVals
+ * @param co2Vals
+ * @param o2Vals
+ * @returns {({color: string, data: *, name: string, offset0: string, offset1: string}|{color: string, data: *, name: string, offset0: string, offset1: string}|{color: string, data: *, name: string, offset0: string, offset1: string})[]}
+ */
+function chart1FormatData( coVals, co2Vals, o2Vals ) {
+  return [{
+    name : 'CO',
+    color : 'rgb(160,114,245)',
+    data : coVals,
+    offset0 : 'rgba(160,114,245,0.27)',
+    offset1 : 'rgba(160,114,245,0)'
+  },
+  {
+    name : 'CO2',
+    color : 'rgb(245,237,91)',
+    data : co2Vals,
+    offset0 : 'rgba(245,237,91,0.27)',
+    offset1 : 'rgba(245,237,91,0)'
+  },
+  {
+    name : 'O2',
+    color : 'rgb(103,245,208)',
+    data : o2Vals,
+    offset0 : 'rgba(103,245,208,0.27)',
+    offset1 : 'rgba(103,245,208,0.1)'
+  }]
+}
+
+/**
+ * 脱碳量趋势图数据格式
+ * @param cVals
+ * @returns {{color: string, data: *, name: string, offset0: string, offset1: string}[]}
+ */
+function chart2FormatData( cVals ) {
+  return [
+    {
+      name : 'C',
+      color : 'rgb(160,114,245)',
+      data : cVals,
+      offset0 : 'rgba(160,114,245,0.27)',
+      offset1 : 'rgba(160,114,245,0)'
+    }
+  ]
 }
 
 defineOptions( {

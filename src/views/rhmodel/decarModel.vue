@@ -210,26 +210,30 @@ async function refreOutCOxy( param ) {
       oxyVals.push( value.oxyVal )
     } )
     chart1XAxis.value = tm
-    coxyChartData.value = [{
-      name : '碳',
-      color : 'rgb(160,114,245)',
-      data : cVals,
-      offset0 : 'rgba(160,114,245,0.27)',
-      offset1 : 'rgba(160,114,245,0)'
-    },
-    {
-      name : '游离氧',
-      color : 'rgb(245,237,91)',
-      data : oxyVals,
-      offset0 : 'rgba(245,237,91,0.27)',
-      offset1 : 'rgba(245,237,91,0)'
-    }]
+    coxyChartData.value = chart1FormatData( cVals, oxyVals )
     // console.log( coxyChartData.value )
   } catch ( e ) {
 
   } finally {
 
   }
+}
+
+function chart1FormatData( cVals, oxyVals ) {
+  return [{
+    name : '碳',
+    color : 'rgb(160,114,245)',
+    data : cVals,
+    offset0 : 'rgba(160,114,245,0.27)',
+    offset1 : 'rgba(160,114,245,0)'
+  },
+  {
+    name : '游离氧',
+    color : 'rgb(245,237,91)',
+    data : oxyVals,
+    offset0 : 'rgba(245,237,91,0.27)',
+    offset1 : 'rgba(245,237,91,0)'
+  }]
 }
 
 // 刷新按键事件

@@ -686,15 +686,15 @@ function calcBtn() {
 }
 // 获取基本信息
 async function refreBaseInfo( param ) {
-  const { data } = await getBaseInfo( { param } )
+  const { data } = await getBaseInfo( param )
   baseInfo.value = { data }.data
 }
 async function refreElementInfo( param ) {
-  const { data } = await getElementInfo( { param } )
+  const { data } = await getElementInfo( param )
   elemComs.value = { data }.data
 }
 async function refreAlloyCalcResult( param ) {
-  const { data } = await getAlloyCalcResult( { param } )
+  const { data } = await getAlloyCalcResult( param )
   calcResult.value = { data }.data
 }
 
@@ -714,7 +714,7 @@ async function updateData() {
     station1 : station.value,
     elemData : dialogData.value
   }
-  const { data } = await updateElementInfo( { param } )
+  const { data } = await updateElementInfo( param )
   console.log( { data } )
   elemComs.value = { data }.data
 }
