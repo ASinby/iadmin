@@ -2,52 +2,52 @@ import http from '/@/utils/request'
 
 /**
  * 计算
- * @param param
+ * @param data
  * @returns {*}
  */
-export function doCalc( param ) {
+export function doCalc( data ) {
   return http.request( {
-    method : 'post',
+    method : 'put',
     url : '/doCalc',
-    param
+    data
   } )
 }
 
 /**
  * 获取炉次基本信息
- * @param param 工位号
+ * @param data 工位号
  * @returns {*}
  */
-export function getBaseInfo( param ) {
+export function getBaseInfo( data ) {
   return http.request( {
     method : 'get',
     url : '/getBaseInfo',
-    param
+    data
   } )
 }
 
 /**
  * 获取碳和游离氧成分预报值
- * @param param 工位号
+ * @param data 工位号
  * @returns {*}
  */
-export function getOutCOxygen( param ) {
+export function getOutCOxygen( data ) {
   return http.request( {
     method : 'get',
     url : '/decarmodel/getOutCOxygen',
-    param
+    data
   } )
 }
 
 /**
  * 修改吹氧量
- * @param param
+ * @param data
  * @returns {*}
  */
-export function updateOxygenNums( param ) {
+export function updateOxygenNums( data ) {
   return http.request( {
     method : 'post',
     url : '/decarmodel/updateOxygenNums',
-    param
+    data
   } )
 }

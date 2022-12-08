@@ -25,16 +25,16 @@
                     </el-form-item>
                     <el-form-item label="设定吹氧量" style="position: relative">
                       <el-radio-group v-model="baseInfo.blowO2Mode">
-                        <el-radio :label="1">不吹氧</el-radio>
-                        <el-radio :label="2">预报量</el-radio>
-                        <el-radio :label="3">设定量</el-radio>
+                        <el-radio :label='"1"'>不吹氧</el-radio>
+                        <el-radio :label='"2"'>预报量</el-radio>
+                        <el-radio :label='"3"'>设定量</el-radio>
                       </el-radio-group>
                       <el-input v-model="baseInfo.setO2" style="position: absolute;width: 100px;top: 30px;right: 35px;" v-if="showOxySet"></el-input>
                     </el-form-item>
                   </el-form>
                   <div class="radio">
-                    <el-radio v-model="station" label="A">A工位</el-radio>
-                    <el-radio v-model="station" label="B">B工位</el-radio>
+                    <el-radio v-model="station" label="1">1工位</el-radio>
+                    <el-radio v-model="station" label="2">2工位</el-radio>
                   </div>
                   <div class="btn">
                     <el-button type="primary" plain @click="refreBtn">刷新</el-button>
@@ -158,14 +158,14 @@
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import LineMarker from './components/LineMarker'
 import { ElMessage } from 'element-plus'
-import { getBaseInfo, getOutCOxygen } from '/@/api/decarmodel'
+import { getBaseInfo, getOutCOxygen, doCalc } from '/@/api/decarmodel'
 
-const baseInfo = ref( { treatNo : '', stno : '', treatStartTm : '', aimOXP : '', setO2 : '', blowO2Mode : 1, runTm : 0, forecastO2 : 99, treatSpan : 0, killingC : 89, tips : 'hi', preC : '', preOXP : '', aimC : '', steelWeight : '', steelTemp : '' } )
+const baseInfo = ref( { treatNo : '', stno : '', treatStartTm : '', aimOXP : '', setO2 : '', blowO2Mode : '1', runTm : 0, forecastO2 : 99, treatSpan : 0, killingC : 89, tips : 'hi', preC : '', preOXP : '', aimC : '', steelWeight : '', steelTemp : '' } )
 const coxyTableData = ref( [] )
 const chart1XAxis = ref( [] )
 const coxyChartData = ref( [] )
 const showOxySet = ref( false )
-const station = ref( 'A' )
+const station = ref( '1' )
 
 onMounted( () => {
   init()
@@ -194,7 +194,7 @@ async function refreBaseInfo( param ) {
 
   }
 }
-// 刷新基本消息
+// 刷新碳和游离氧
 async function refreOutCOxy( param ) {
   try {
     const { data } = await getOutCOxygen( param )
@@ -246,7 +246,8 @@ function refreBtn() {
   } )
 }
 // 计算按键事件
-function calcBtn() {
+async function calcBtn() {
+  await doCalc( baseInfo.value )
   init()
   ElMessage( {
     message : '计算成功',
@@ -259,14 +260,14 @@ function calcBtn() {
 watch( () => baseInfo.value.blowO2Mode,
   ( blowO2Mode ) => {
     // 1不吹氧  2预报量  3设定量
-    if ( blowO2Mode === 1 ) {
+    if ( blowO2Mode === '1' ) {
       showOxySet.value = false
       baseInfo.value.setO2 = 0
-    } else if ( blowO2Mode === 2 ) {
+    } else if ( blowO2Mode === '2' ) {
       showOxySet.value = false
       baseInfo.value.setO2 = baseInfo.value.forecastO2
-    } else if ( blowO2Mode === 3 ) {
-      baseInfo.value.setO2 = ''
+    } else if ( blowO2Mode === '3' ) {
+      // baseInfo.value.setO2 = ''
       showOxySet.value = true
     }
     console.log( `blowO2Mode is: ${blowO2Mode}`, baseInfo.value.setO2 )
@@ -277,7 +278,7 @@ watch( station, ( newX ) => {
   // console.log(`x is ${newX}`)
   init()
   ElMessage( {
-    message : `station is ${newX}`,
+    message : '刷新成功！',
     type : 'success',
     duration : 2 * 1000
   } )

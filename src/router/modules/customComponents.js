@@ -5,7 +5,7 @@ export default {
   component : Layout,
   name : 'Flow',
   redirect : '/flow/formEditor',
-  meta : { title : '小组件', icon : 'devices' },
+  meta : { title : '小组件', icon : 'devices', hidden : true },
   children : [
     // 流程图 TODO
     // {

@@ -9,7 +9,8 @@ export default {
     title : '嵌套路由',
     icon : 'nested',
     noCache : false,
-    roles : ['admin']
+    roles : ['admin'],
+    hidden : true
   },
   children : [
     {

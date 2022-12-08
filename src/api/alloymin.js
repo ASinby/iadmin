@@ -2,91 +2,91 @@ import http from '/@/utils/request'
 
 /**
  * 计算
- * @param param
+ * @param data
  * @returns {*}
  */
-export function doCalc( param ) {
+export function doCalc( data ) {
   return http.request( {
-    method : 'post',
+    method : 'put',
     url : '/doCalc',
-    param
+    data
   } )
 }
 
 /**
  * 获取炉次信息
- * @param param 工位号
+ * @param data 工位号
  * @returns {*}
  */
-export function getBaseInfo( param ) {
+export function getBaseInfo( data ) {
   return http.request( {
     method : 'get',
     url : '/getBaseInfo',
-    param
+    data
   } )
 }
 
 /**
  * 获取元素信息表格数据
- * @param param 工位号
+ * @param data 工位号
  * @returns {*}
  */
-export function getElementInfo( param ) {
+export function getElementInfo( data ) {
   return http.request( {
     method : 'get',
     url : '/alloymin/getElementInfo',
-    param
+    data
   } )
 }
 
 /**
  * 获取合金计算结果表格数据
- * @param param 工位号
+ * @param data 工位号
  * @returns {*}
  */
-export function getAlloyCalcResult( param ) {
+export function getAlloyCalcResult( data ) {
   return http.request( {
     method : 'get',
     url : '/alloymin/getAlloyCalcResult',
-    param
+    data
   } )
 }
 
 /**
  * 修改元素信息
- * @param param
+ * @param data
  * @returns {*}
  */
-export function updateElementInfo( param ) {
+export function updateElementInfo( data ) {
   return http.request( {
-    method : 'post',
+    method : 'put',
     url : '/alloymin/updateElementInfo',
-    param
+    data
   } )
 }
 
 /**
  * 修改合金计算结果
- * @param param
+ * @param data
  * @returns {*}
  */
-export function updateAlloyCalcResult( param ) {
+export function updateAlloyCalcResult( data ) {
   return http.request( {
-    method : 'post',
+    method : 'put',
     url : '/alloymin/updateAlloyCalcResult',
-    param
+    data
   } )
 }
 
 /**
  * 修改脱氧铝/加热铝
- * @param param
+ * @param data
  * @returns {*}
  */
-export function updateAlNums( param ) {
+export function updateAlNums( data ) {
   return http.request( {
-    method : 'post',
+    method : 'put',
     url : '/alloymin/updateAlNums',
-    param
+    data
   } )
 }

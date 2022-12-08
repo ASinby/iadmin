@@ -4,8 +4,8 @@
       <el-col :xs="3" :sm="3" :lg="3">
         <div class="city-selected-head">
           <div class="radio">
-            <el-radio v-model="station" label="A">A工位</el-radio>
-            <el-radio v-model="station" label="B">B工位</el-radio>
+            <el-radio v-model="station" label="1">1工位</el-radio>
+            <el-radio v-model="station" label="2">2工位</el-radio>
           </div>
         </div>
       </el-col>
@@ -65,9 +65,12 @@
                     height="35vh">
               <el-table-column
                       fixed
-                      prop="title"
-                      label="元素名称"
+                      prop="flag"
+                      label="类型"
                       width="150">
+                <template #default="scope">
+                  {{getTitle( scope.row.flag )}}
+                </template>
               </el-table-column>
               <el-table-column
                       prop="cVal"
@@ -185,6 +188,16 @@
                       width="120">
               </el-table-column>
               <el-table-column
+                      prop="coVal"
+                      label="Co"
+                      width="120">
+              </el-table-column>
+              <el-table-column
+                      prop="nVal"
+                      label="N"
+                      width="120">
+              </el-table-column>
+              <el-table-column
                       fixed="right"
                       label="操作"
                       width="100">
@@ -214,6 +227,9 @@
                 </el-form-item>
                 <el-form-item prop="number" label="加热铝[kg]">
                   <el-input v-model="formOfAl.heatAl" placeholder="加热铝[kg]" title="加热铝[kg]"></el-input>
+                </el-form-item>
+                <el-form-item v-if="false">
+                  <el-button type="success">保存</el-button>
                 </el-form-item>
               </el-form>
             </div>
@@ -336,7 +352,7 @@
 <script setup>
 import { nextTick, onMounted, reactive, ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
-import { getBaseInfo, getElementInfo, getAlloyCalcResult, updateElementInfo } from '/@/api/alloymin'
+import { getBaseInfo, getElementInfo, getAlloyCalcResult, updateElementInfo, doCalc } from '/@/api/alloymin'
 
 // 配置
 const set = reactive( {
@@ -436,7 +452,7 @@ const set = reactive( {
   }
 } )
 // 工位点
-const station = ref( 'A' )
+const station = ref( '1' )
 // const elemName = { cVal : 'C', siVal : 'Si', mnVal : 'Mn', pVal : 'P', sVal : 'S', mgVal : 'Mg', crVal : 'Cr', niVal : 'Ni', moVal : 'Mo', cuVal : 'Cu', alVal : 'Al',
 //   tiVal : 'Ti', vVal  : 'V', nbVal : 'Nb', wVal  : 'W', bVal  : 'B', caVal : 'Ca', sbVal : 'Sb', asVal : 'As', snVal : 'Sn', pbVal : 'Pb', biVal : 'Bi', ceVal : 'Ce' }
 // 炉次基本信息
@@ -662,7 +678,7 @@ const hideDialog = () => {
 watch( station, ( newX ) => {
   init()
   ElMessage( {
-    message : `station is ${newX}`,
+    message : '刷新成功！',
     type : 'success',
     duration : 2 * 1000
   } )
@@ -677,7 +693,9 @@ function refreBtn() {
   } )
 }
 // 计算按键事件
-function calcBtn() {
+async function calcBtn() {
+  await doCalc( baseInfo.value )
+  init()
   ElMessage( {
     message : '计算成功',
     type : 'success',
@@ -710,13 +728,15 @@ function handleUpdate( row ) {
 }
 // 修改合金信息
 async function updateData() {
-  const param = {
-    station1 : station.value,
-    elemData : dialogData.value
-  }
-  const { data } = await updateElementInfo( param )
+  console.log( dialogData.value )
+  const { data } = await updateElementInfo( dialogData.value )
   console.log( { data } )
-  elemComs.value = { data }.data
+  // elemComs.value = { data }.data
+}
+// 行类型
+function getTitle( flag ) {
+  const title = ['元素下限', '元素目标', '元素上限', '成分最新', '目标调整', '标准收得率']
+  return title[flag - 1]
 }
 defineOptions( {
   name : 'alloyMin'

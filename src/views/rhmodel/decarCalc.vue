@@ -28,8 +28,8 @@
                   </div>
                   <div class="radio">
                     <el-radio-group v-model="station">
-                      <el-radio-button label="A">A工位</el-radio-button>
-                      <el-radio-button label="B">B工位</el-radio-button>
+                      <el-radio-button label="1">1工位</el-radio-button>
+                      <el-radio-button label="2">2工位</el-radio-button>
                     </el-radio-group>
                   </div>
                 </div>
@@ -102,7 +102,7 @@ import { ElMessage } from 'element-plus'
 import { doCalc, getBaseInfo, getChart1Data, getChart2Data } from '/@/api/decarcalc'
 import LineMarker from './components/LineMarker'
 
-const station = ref( 'A' )
+const station = ref( '1' )
 
 const chart1 = ref( null )
 const chart1XAxis = ref( ['13:00', '13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35', '13:40', '13:45', '13:50', '13:55'] )
@@ -145,14 +145,13 @@ onMounted( () => {
   init()
 } )
 
-watch( station, ( newVal ) => {
-  const param = {
-    station1 : newVal
-  }
-  // console.log( param )
-  refrebaseInfo( param )
-  refreWasteGas( param )
-  refreOutCoxy( param )
+watch( station, ( newX ) => {
+  init()
+  ElMessage( {
+    message : '刷新成功！',
+    type : 'success',
+    duration : 2 * 1000
+  } )
 } )
 
 function init() {
@@ -166,22 +165,18 @@ function init() {
 }
 
 function refreBtn() {
-  const param = {
-    station1 : station.value
-  }
-
-  refrebaseInfo( param )
-  refreWasteGas( param )
-  refreOutCoxy( param )
+  init()
+  ElMessage( {
+    message : '刷新成功！',
+    type : 'success',
+    duration : 2 * 1000
+  } )
 }
 async function calcBtn() {
   try {
-    const param = {
-      station1 : station.value,
-      data : baseInfo.value
-    }
-    const { data } = await doCalc( param )
+    const { data } = await doCalc( baseInfo.value )
     console.log( { data } )
+    init()
     ElMessage( {
       message : '计算成功',
       type : 'success',

@@ -98,7 +98,8 @@ export const asyncRoutes = [
     name : 'Icon',
     component : Layout,
     meta : {
-      title : '图标'
+      title : '图标',
+      hidden : true
     },
     children : [
       {
@@ -115,7 +116,8 @@ export const asyncRoutes = [
     name : 'Directive',
     component : Layout,
     meta : {
-      title : '指令'
+      title : '指令',
+      hidden : true
     },
     children : [
       {
@@ -134,7 +136,7 @@ export const asyncRoutes = [
     path : '/charts',
     component : Layout,
     name : 'Charts',
-    meta : { title : '图表', icon : 'charts' },
+    meta : { title : '图表', icon : 'charts', hidden : true },
     children : [
       {
         path : 'keyboard',
@@ -170,7 +172,8 @@ export const asyncRoutes = [
     redirect : '/map/baidu',
     meta : {
       title : '地图',
-      icon : 'map'
+      icon : 'map',
+      hidden : true
     },
     children : [
       {
@@ -213,7 +216,7 @@ export const asyncRoutes = [
     name : 'Table',
     component : Layout,
     redirect : '/table/dynamic',
-    meta : { title : '表格', icon : 'table', noCache : true },
+    meta : { title : '表格', icon : 'table', noCache : true, hidden : true },
     children : [
       {
         path : 'dynamic',
@@ -247,7 +250,7 @@ export const asyncRoutes = [
     name : 'User',
     component : Layout,
     redirect : '/user/index',
-    meta : { title : '个人中心', icon : 'about', noCache : true },
+    meta : { title : '个人中心', icon : 'about', noCache : true, hidden : true },
     children : [
       {
         path : 'index',
@@ -275,7 +278,8 @@ export const asyncRoutes = [
     name : 'Animate',
     component : Layout,
     meta : {
-      title : '动画'
+      title : '动画',
+      hidden : true
     },
     children : [
       {
@@ -291,7 +295,7 @@ export const asyncRoutes = [
     path : '/external-link',
     name : 'ExternalLink',
     component : Layout,
-    meta : { title : '外链', icon : 'outside' },
+    meta : { title : '外链', icon : 'outside', hidden : true },
     children : [
       {
         path : 'https://github.com/mvpyb/vite-element-admin',

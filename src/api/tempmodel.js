@@ -2,65 +2,65 @@ import http from '/@/utils/request'
 
 /**
  * 计算
- * @param param
+ * @param data
  * @returns {*}
  */
-export function doCalc( param ) {
+export function doCalc( data ) {
   return http.request( {
-    method : 'post',
+    method : 'put',
     url : '/doCalc',
-    param
+    data
   } )
 }
 
 /**
  * 获取炉次基本信息
- * @param param 工位号
+ * @param data 工位号
  * @returns {*}
  */
-export function getBaseInfo( param ) {
+export function getBaseInfo( data ) {
   return http.request( {
     method : 'get',
     url : '/getBaseInfo',
-    param
+    data
   } )
 }
 
 /**
  * 获取温度预测与实际值
- * @param param 工位号
+ * @param data 工位号
  * @returns {*}
  */
-export function getTempData( param ) {
+export function getTempData( data ) {
   return http.request( {
     method : 'get',
     url : '/tempmodel/getTempData',
-    param
+    data
   } )
 }
 
 /**
  * 获取合金信息
- * @param param 工位号
+ * @param data 工位号
  * @returns {*}
  */
-export function getAlloyInfo( param ) {
+export function getAlloyInfo( data ) {
   return http.request( {
     method : 'get',
     url : '/tempmodel/getAlloyInfo',
-    param
+    data
   } )
 }
 
 /**
  * 获取吹氧信息
- * @param param 工位号
+ * @param data 工位号
  * @returns {*}
  */
-export function getBlastOxyInfo( param ) {
+export function getBlastOxyInfo( data ) {
   return http.request( {
     method : 'get',
     url : '/tempmodel/getBlastOxyInfo',
-    param
+    data
   } )
 }

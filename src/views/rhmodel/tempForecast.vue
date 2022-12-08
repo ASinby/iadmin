@@ -4,8 +4,8 @@
       <el-col :xs="3" :sm="3" :lg="3">
         <div class="city-selected-head">
           <div class="radio">
-            <el-radio v-model="station" label="A">A工位</el-radio>
-            <el-radio v-model="station" label="B">B工位</el-radio>
+            <el-radio v-model="station" label="1">1工位</el-radio>
+            <el-radio v-model="station" label="2">2工位</el-radio>
           </div>
         </div>
       </el-col>
@@ -62,46 +62,35 @@
       <el-col :span="8">
         <div class="table-container">
           <div class="table-head">
-            <div class="table-head-title">吹氧信息</div>
+            <div class="table-head-title">计划投入合金信息</div>
           </div>
           <div class="table-body">
             <el-table
-                    :data="tableData"
+                    :data="alloyOfPlan"
                     :header-cell-style="{textAlign: 'center'}"
                     :cell-style="{textAlign: 'center'}"
                     style="width: 100%"
                     height="35vh">
-              <!--<el-table-column
-                      fixed
-                      prop="date"
-                      label="日期"
-                      width="150">
+              <el-table-column
+                      prop="bunkerNo"
+                      label="料仓号"
+                      width="130">
               </el-table-column>
               <el-table-column
-                      prop="name"
-                      label="姓名"
-                      width="120">
+                      prop="matCode"
+                      label="物料代码"
+                      width="130">
               </el-table-column>
               <el-table-column
-                      prop="province"
-                      label="省份"
-                      width="120">
+                      prop="matName"
+                      label="物料名称"
+                      width="130">
               </el-table-column>
               <el-table-column
-                      prop="city"
-                      label="市区"
-                      width="120">
+                      prop="calw"
+                      label="计算重量"
+                      width="130">
               </el-table-column>
-              <el-table-column
-                      prop="address"
-                      label="地址"
-                      width="300">
-              </el-table-column>
-              <el-table-column
-                      prop="zip"
-                      label="邮编"
-                      width="120">
-              </el-table-column>-->
             </el-table>
           </div>
         </div>
@@ -178,7 +167,7 @@
       <el-col :span="24">
         <div class="table-container">
           <div class="table-head">
-            <div class="table-head-title">计划投入合金信息</div>
+            <div class="table-head-title">吹氧信息</div>
           </div>
           <div class="table-body">
             <el-table
@@ -188,13 +177,34 @@
                     style="width: 100%"
                     height="29vh">
               <!--<el-table-column
+                      fixed
                       prop="date"
-                      label="时间"
-                      width="120">
+                      label="日期"
+                      width="150">
               </el-table-column>
               <el-table-column
                       prop="name"
-                      label="温度"
+                      label="姓名"
+                      width="120">
+              </el-table-column>
+              <el-table-column
+                      prop="province"
+                      label="省份"
+                      width="120">
+              </el-table-column>
+              <el-table-column
+                      prop="city"
+                      label="市区"
+                      width="120">
+              </el-table-column>
+              <el-table-column
+                      prop="address"
+                      label="地址"
+                      width="300">
+              </el-table-column>
+              <el-table-column
+                      prop="zip"
+                      label="邮编"
                       width="120">
               </el-table-column>-->
             </el-table>
@@ -208,9 +218,9 @@
 <script setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
-import { getActualTemp, getAlloyInfo, getAlloyInfoOfPlan, getBaseInfo, getBlowingOxygen } from '/@/api/tempforecast'
+import { getActualTemp, getAlloyInfo, getAlloyInfoOfPlan, getBaseInfo, getBlowingOxygen, doCalc } from '/@/api/tempforecast'
 
-const station = ref( 'A' )
+const station = ref( '1' )
 const baseInfo = ref( { treatNo : '', stStatus : '', vacTankTemp : '', alloyAddWeight : '', treatStartTm : '', stno : '', steelWeight : '', treatSpan : '', setO2 : '', treatEndTm : '' } )
 // 合金信息
 const alloyInfo = ref( [
@@ -220,6 +230,7 @@ const alloyInfo = ref( [
 ] )
 // 实测温度
 const realTemp = ref( [{ id : '10:12', tempAct : 1600 }, { id : '10:12', tempAct : 1600 }] )
+const alloyOfPlan = ref( [] )
 onMounted( () => {
   init()
 } )
@@ -232,7 +243,7 @@ onUnmounted( () => {
 watch( station, ( newX ) => {
   init()
   ElMessage( {
-    message : `station is ${newX}`,
+    message : '刷新成功！',
     type : 'success',
     duration : 2 * 1000
   } )
@@ -274,7 +285,7 @@ async function refreO2Info( param ) {
 async function refreAlloyInfo( param ) {
   try {
     const { data } = await getAlloyInfo( param )
-    console.log( '合金信息', { data } )
+    // console.log( '合金信息', { data } )
     alloyInfo.value = { data }.data
   } catch ( e ) {
 
@@ -286,7 +297,7 @@ async function refreAlloyInfo( param ) {
 async function refreRealTempInfo( param ) {
   try {
     const { data } = await getActualTemp( param )
-    console.log( '实测温度信息', { data } )
+    // console.log( '实测温度信息', { data } )
     realTemp.value = { data }.data
   } catch ( e ) {
 
@@ -298,7 +309,8 @@ async function refreRealTempInfo( param ) {
 async function refrePlanUseAlloy( param ) {
   try {
     const { data } = await getAlloyInfoOfPlan( param )
-    console.log( '计划投入合金信息', { data } )
+    // console.log( '计划投入合金信息', { data } )
+    alloyOfPlan.value = { data }.data
   } catch ( e ) {
 
   } finally {
@@ -316,7 +328,8 @@ function refreBtn() {
   } )
 }
 // 计算按键事件
-function calcBtn() {
+async function calcBtn() {
+  await doCalc( baseInfo.value )
   init()
   ElMessage( {
     message : '计算成功',

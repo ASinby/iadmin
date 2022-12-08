@@ -4,8 +4,8 @@
       <el-col :xs="3" :sm="3" :lg="3" class="left-col">
         <div class="city-selected-head">
           <div class="radio">
-            <el-radio v-model="station" label="A">A工位</el-radio>
-            <el-radio v-model="station" label="B">B工位</el-radio>
+            <el-radio v-model="station" label="1">1工位</el-radio>
+            <el-radio v-model="station" label="2">2工位</el-radio>
           </div>
         </div>
       </el-col>
@@ -204,9 +204,9 @@
 import { onMounted, ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import LineMarker from './components/LineMarker'
-import { getBaseInfo, getTempData, getAlloyInfo, getBlastOxyInfo } from '/@/api/tempmodel'
+import { getBaseInfo, getTempData, getAlloyInfo, getBlastOxyInfo, doCalc } from '/@/api/tempmodel'
 
-const station = ref( 'A' )
+const station = ref( '1' )
 const baseInfo = ref( { treatNo : '', stStatus : '', vacTankTemp : '', vacTankAlAdd : '', treatStartTm : '', stno : '', steelWeight : '', treatSpan : '', vacTankTempAdd : '', treatEndTm : '' } )
 
 const tempData = ref( [] )
@@ -236,16 +236,9 @@ onMounted( () => {
 } )
 
 watch( station, ( newVal ) => {
-  const param = {
-    station1 : station.value
-  }
-  refreBaseInfo( param )
-  refreTempData( param )
-  refreAlloyInfo( param )
-  refreBlastOxyInfo( param )
-
+  init()
   ElMessage( {
-    message : '选中' + newVal,
+    message : '刷新成功！',
     type : 'success',
     duration : 3 * 1000
   } )
@@ -310,7 +303,8 @@ function refreBtn() {
   } )
 }
 // 计算按键事件
-function calcBtn() {
+async function calcBtn() {
+  await doCalc( baseInfo.value )
   init()
   ElMessage( {
     message : '计算成功',
