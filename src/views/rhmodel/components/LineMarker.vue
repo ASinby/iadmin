@@ -114,14 +114,15 @@ const initChart = () => {
         }
       }
     },
-    color : getColor(), /* [chartData.fluegas.color, chartData.CO.color, chartData.CO2.color, chartData.O2.color]设置legend每块数据块的颜色 */
+    color :
+      getColor() /* [chartData.fluegas.color, chartData.CO.color, chartData.CO2.color, chartData.O2.color]设置legend每块数据块的颜色 */,
     legend : {
       top : 20,
       icon : 'rect',
       itemWidth : 14,
       itemHeight : 5,
       itemGap : 13,
-      data : getLegendData(), /* [chartData.fluegas.name, chartData.CO.name, chartData.CO2.name, chartData.O2.name] */
+      data : getLegendData() /* [chartData.fluegas.name, chartData.CO.name, chartData.CO2.name, chartData.O2.name] */,
       right : '4%',
       textStyle : {
         fontSize : 12,
@@ -209,7 +210,10 @@ function getSeries() {
       areaStyle : {
         normal : {
           color : new echarts.graphic.LinearGradient(
-            0, 0, 0, 1,
+            0,
+            0,
+            0,
+            1,
             [
               {
                 offset : 0,
@@ -233,10 +237,13 @@ function getSeries() {
   return series
 }
 
-watch( () => props.chartData, ( newVal ) => {
-  console.log( 'chartData of LineMarker', props.chartData )
-  initChart()
-} )
+watch(
+  () => props.chartData,
+  newVal => {
+    console.log( 'chartData of LineMarker', props.chartData )
+    initChart()
+  }
+)
 
 defineOptions( {
   name : 'LineMarker'

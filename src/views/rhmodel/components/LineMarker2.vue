@@ -77,7 +77,7 @@ const initChart = () => {
         }
       }
     },
-    color : [chartData.fluegas.color, chartData.C.color], /* 设置legend每块数据块的颜色 */
+    color : [chartData.fluegas.color, chartData.C.color] /* 设置legend每块数据块的颜色 */,
     legend : {
       top : 20,
       icon : 'rect',
@@ -151,7 +151,10 @@ const initChart = () => {
         areaStyle : {
           normal : {
             color : new echarts.graphic.LinearGradient(
-              0, 0, 0, 1,
+              0,
+              0,
+              0,
+              1,
               [
                 {
                   offset : 0,
@@ -192,7 +195,10 @@ const initChart = () => {
         areaStyle : {
           normal : {
             color : new echarts.graphic.LinearGradient(
-              0, 0, 0, 1,
+              0,
+              0,
+              0,
+              1,
               [
                 {
                   offset : 0,

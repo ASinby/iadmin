@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-editor-container">
-    <el-row style="padding: 0px 0px 20px 0px;">
+    <el-row style="padding: 0px 0px 20px 0px">
       <el-col :xs="3" :sm="3" :lg="3">
         <div class="city-selected-head">
           <div class="radio">
@@ -37,7 +37,11 @@
                 <el-input v-model="baseInfo.steelWeight" placeholder="钢水重量[Kg]" title="钢水重量[Kg]"></el-input>
               </el-form-item>
               <el-form-item label="">
-                <el-input v-model="baseInfo.treatSpan" placeholder="计划处理时长[0.1分]" title="计划处理时长[0.1分]"></el-input>
+                <el-input
+                  v-model="baseInfo.treatSpan"
+                  placeholder="计划处理时长[0.1分]"
+                  title="计划处理时长[0.1分]"
+                ></el-input>
               </el-form-item>
               <el-form-item label="">
                 <el-input v-model="baseInfo.setO2" placeholder="吹氧量" title="吹氧量"></el-input>
@@ -66,31 +70,16 @@
           </div>
           <div class="table-body">
             <el-table
-                    :data="alloyOfPlan"
-                    :header-cell-style="{textAlign: 'center'}"
-                    :cell-style="{textAlign: 'center'}"
-                    style="width: 100%"
-                    height="35vh">
-              <el-table-column
-                      prop="bunkerNo"
-                      label="料仓号"
-                      width="130">
-              </el-table-column>
-              <el-table-column
-                      prop="matCode"
-                      label="物料代码"
-                      width="130">
-              </el-table-column>
-              <el-table-column
-                      prop="matName"
-                      label="物料名称"
-                      width="130">
-              </el-table-column>
-              <el-table-column
-                      prop="calw"
-                      label="计算重量"
-                      width="130">
-              </el-table-column>
+              :data="alloyOfPlan"
+              :header-cell-style="{ textAlign: 'center' }"
+              :cell-style="{ textAlign: 'center' }"
+              style="width: 100%"
+              height="35vh"
+            >
+              <el-table-column prop="bunkerNo" label="料仓号" width="130"> </el-table-column>
+              <el-table-column prop="matCode" label="物料代码" width="130"> </el-table-column>
+              <el-table-column prop="matName" label="物料名称" width="130"> </el-table-column>
+              <el-table-column prop="calw" label="计算重量" width="130"> </el-table-column>
             </el-table>
           </div>
         </div>
@@ -101,37 +90,18 @@
             <div class="table-head-title">合金信息</div>
           </div>
           <div class="table-body">
-            <el-table :data="alloyInfo"
-                      :header-cell-style="{textAlign: 'center'}"
-                      :cell-style="{textAlign: 'center'}"
-                      style="width: 100%"
-                      height="35vh">
-              <el-table-column
-                      fixed
-                      prop="matCode"
-                      label="物料编号"
-                      width="120">
-              </el-table-column>
-              <el-table-column
-                      prop="matType"
-                      label="物料类型"
-                      width="120">
-              </el-table-column>
-              <el-table-column
-                      prop="matName"
-                      label="物料描述"
-                      width="150">
-              </el-table-column>
-              <el-table-column
-                      prop="matAmount"
-                      label="物料重量"
-                      width="120">
-              </el-table-column>
-              <el-table-column
-                      prop="manualFlag"
-                      label="手投料标志"
-                      width="120">
-              </el-table-column>
+            <el-table
+              :data="alloyInfo"
+              :header-cell-style="{ textAlign: 'center' }"
+              :cell-style="{ textAlign: 'center' }"
+              style="width: 100%"
+              height="35vh"
+            >
+              <el-table-column fixed prop="matCode" label="物料编号" width="120"> </el-table-column>
+              <el-table-column prop="matType" label="物料类型" width="120"> </el-table-column>
+              <el-table-column prop="matName" label="物料描述" width="150"> </el-table-column>
+              <el-table-column prop="matAmount" label="物料重量" width="120"> </el-table-column>
+              <el-table-column prop="manualFlag" label="手投料标志" width="120"> </el-table-column>
             </el-table>
           </div>
         </div>
@@ -143,27 +113,20 @@
           </div>
           <div class="table-body">
             <el-table
-                    :data="realTemp"
-                    :header-cell-style="{textAlign: 'center'}"
-                    :cell-style="{textAlign: 'center'}"
-                    style="width: 100%"
-                    height="35vh">
-              <el-table-column
-                      prop="id"
-                      label="时间"
-                      width="260">
-              </el-table-column>
-              <el-table-column
-                      prop="tempAct"
-                      label="温度"
-                      width="260">
-              </el-table-column>
+              :data="realTemp"
+              :header-cell-style="{ textAlign: 'center' }"
+              :cell-style="{ textAlign: 'center' }"
+              style="width: 100%"
+              height="35vh"
+            >
+              <el-table-column prop="id" label="时间" width="260"> </el-table-column>
+              <el-table-column prop="tempAct" label="温度" width="260"> </el-table-column>
             </el-table>
           </div>
         </div>
       </el-col>
     </el-row>
-    <el-row style="padding: 20px 0px 0px 0px;">
+    <el-row style="padding: 20px 0px 0px 0px">
       <el-col :span="24">
         <div class="table-container">
           <div class="table-head">
@@ -171,11 +134,12 @@
           </div>
           <div class="table-body">
             <el-table
-                    :data="tableData"
-                    :header-cell-style="{textAlign: 'center'}"
-                    :cell-style="{textAlign: 'center'}"
-                    style="width: 100%"
-                    height="29vh">
+              :data="tableData"
+              :header-cell-style="{ textAlign: 'center' }"
+              :cell-style="{ textAlign: 'center' }"
+              style="width: 100%"
+              height="29vh"
+            >
               <!--<el-table-column
                       fixed
                       prop="date"
@@ -218,10 +182,28 @@
 <script setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
-import { getActualTemp, getAlloyInfo, getAlloyInfoOfPlan, getBaseInfo, getBlowingOxygen, doCalc } from '/@/api/tempforecast'
+import {
+  getActualTemp,
+  getAlloyInfo,
+  getAlloyInfoOfPlan,
+  getBaseInfo,
+  getBlowingOxygen,
+  doCalc
+} from '/@/api/tempforecast'
 
 const station = ref( '1' )
-const baseInfo = ref( { treatNo : '', stStatus : '', vacTankTemp : '', alloyAddWeight : '', treatStartTm : '', stno : '', steelWeight : '', treatSpan : '', setO2 : '', treatEndTm : '' } )
+const baseInfo = ref( {
+  treatNo : '',
+  stStatus : '',
+  vacTankTemp : '',
+  alloyAddWeight : '',
+  treatStartTm : '',
+  stno : '',
+  steelWeight : '',
+  treatSpan : '',
+  setO2 : '',
+  treatEndTm : ''
+} )
 // 合金信息
 const alloyInfo = ref( [
   { matCode : '1', matType : '', matName : '', matAmount : '', manualFlag : '' },
@@ -229,18 +211,19 @@ const alloyInfo = ref( [
   { matCode : '3', matType : '', matName : '', matAmount : '', manualFlag : '' }
 ] )
 // 实测温度
-const realTemp = ref( [{ id : '10:12', tempAct : 1600 }, { id : '10:12', tempAct : 1600 }] )
+const realTemp = ref( [
+  { id : '10:12', tempAct : 1600 },
+  { id : '10:12', tempAct : 1600 }
+] )
 const alloyOfPlan = ref( [] )
 onMounted( () => {
   init()
 } )
 
-onUnmounted( () => {
-
-} )
+onUnmounted( () => {} )
 
 // 监听station变化  ref类型数据
-watch( station, ( newX ) => {
+watch( station, newX => {
   init()
   ElMessage( {
     message : '刷新成功！',
@@ -265,9 +248,7 @@ async function refreBaseInfo( param ) {
     const { data } = await getBaseInfo( param )
     baseInfo.value = { data }.data
   } catch ( e ) {
-
   } finally {
-
   }
 }
 // 吹氧信息
@@ -276,9 +257,7 @@ async function refreO2Info( param ) {
     const { data } = await getBlowingOxygen( param )
     console.log( '吹氧信息', { data } )
   } catch ( e ) {
-
   } finally {
-
   }
 }
 // 合金信息
@@ -288,9 +267,7 @@ async function refreAlloyInfo( param ) {
     // console.log( '合金信息', { data } )
     alloyInfo.value = { data }.data
   } catch ( e ) {
-
   } finally {
-
   }
 }
 // 实测温度信息
@@ -300,9 +277,7 @@ async function refreRealTempInfo( param ) {
     // console.log( '实测温度信息', { data } )
     realTemp.value = { data }.data
   } catch ( e ) {
-
   } finally {
-
   }
 }
 // 计划投入合金信息
@@ -312,9 +287,7 @@ async function refrePlanUseAlloy( param ) {
     // console.log( '计划投入合金信息', { data } )
     alloyOfPlan.value = { data }.data
   } catch ( e ) {
-
   } finally {
-
   }
 }
 
@@ -347,13 +320,12 @@ defineOptions( {
 .chart-container {
   position: relative;
   width: 100%;
-  height: calc(100vh/2 - 84px);
+  height: calc(100vh / 2 - 84px);
 }
 .dashboard-editor-container {
   padding: 32px 32px 32px 32px;
   background-color: rgb(240, 242, 245);
   position: relative;
-
 }
 .card {
   background: #fff;
@@ -377,14 +349,14 @@ defineOptions( {
   border-radius: 3px 0px 0px 3px;
   box-sizing: content-box;
   height: 10vh;
-  .radio{
+  .radio {
     text-align: center;
     margin: 3vh 0 0 0;
   }
 }
 .city-selected-body {
   font-size: 14px;
-  padding: 0px;  /* 20px */
+  padding: 0px; /* 20px */
   font-weight: 400;
   background-color: #dee2e6;
   position: relative;
@@ -405,14 +377,14 @@ defineOptions( {
   border-radius: 0px 3px 3px 0px;
   box-sizing: content-box;
   height: 10vh;
-  .btn{
+  .btn {
     text-align: center;
     margin: 3vh 0 0 0;
   }
 }
-.table-container{
+.table-container {
   /*padding-left: 10px;
-  padding-right: 10px*/;
+  padding-right: 10px*/
 }
 .table-head {
   font-size: 20px;
@@ -425,7 +397,7 @@ defineOptions( {
   border-radius: 3px 3px 0px 0px;
   box-sizing: content-box;
   height: 4vh;
-  .table-head-title{
+  .table-head-title {
     position: absolute;
     padding: 5px;
   }
@@ -443,7 +415,7 @@ defineOptions( {
   /*height: 10vh;*/
 }
 /* 表单 */
-.form-row{
+.form-row {
   position: relative;
   text-align: center;
   top: 9px;

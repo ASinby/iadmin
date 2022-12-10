@@ -5,14 +5,14 @@
         <el-row class="chats-container">
           <el-col :xs="24" :sm="24" :lg="24">
             <div class="chart-wrapper chart-container">
-              <LineMarker name="废气流量" id="chart1" :chartData="chart1Data" :xAxisData="chart1XAxis" yVal="-"/>
+              <LineMarker name="废气流量" id="chart1" :chartData="chart1Data" :xAxisData="chart1XAxis" yVal="-" />
             </div>
           </el-col>
         </el-row>
         <el-row class="chats-container">
           <el-col :xs="24" :sm="24" :lg="24">
             <div class="chart-wrapper chart-container">
-              <LineMarker name="脱氧量" id="chart2" :chartData="chart2Data" :xAxisData="chart2XAxis" yVal="ppm"/>
+              <LineMarker name="脱氧量" id="chart2" :chartData="chart2Data" :xAxisData="chart2XAxis" yVal="ppm" />
             </div>
           </el-col>
         </el-row>
@@ -23,9 +23,7 @@
             <el-row :gutter="0" class="table-list">
               <el-col :span="24">
                 <div class="info">
-                  <div class="city">
-                    动态模型输入量与设定值
-                  </div>
+                  <div class="city">动态模型输入量与设定值</div>
                   <div class="radio">
                     <el-radio-group v-model="station">
                       <el-radio-button label="1">1工位</el-radio-button>
@@ -37,7 +35,7 @@
             </el-row>
           </div>
 
-          <div style="padding: 8px;">
+          <div style="padding: 8px">
             <el-form :label-position="left" label-width="120px" :model="baseInfo">
               <el-form-item label="处理号">
                 <el-input v-model="baseInfo.treatNo"></el-input>
@@ -105,30 +103,58 @@ import LineMarker from './components/LineMarker'
 const station = ref( '1' )
 
 const chart1 = ref( null )
-const chart1XAxis = ref( ['13:00', '13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35', '13:40', '13:45', '13:50', '13:55'] )
-const chart1Data = ref( [{
-  name : 'CO',
-  color : 'rgb(160,114,245)',
-  data : [120, 110, 125, 145, 122, 165, 122, 220, 182, 191, 134, 150],
-  offset0 : 'rgba(160,114,245,0.27)',
-  offset1 : 'rgba(160,114,245,0)'
-},
-{
-  name : 'CO2',
-  color : 'rgb(245,237,91)',
-  data : [220, 182, 125, 145, 122, 191, 134, 150, 120, 110, 165, 122],
-  offset0 : 'rgba(245,237,91,0.27)',
-  offset1 : 'rgba(245,237,91,0)'
-},
-{
-  name : 'O2',
-  color : 'rgb(103,245,208)',
-  data : [110, 125, 145, 134, 150, 120, 110, 125, 145, 165, 122, 220],
-  offset0 : 'rgba(103,245,208,0.27)',
-  offset1 : 'rgba(103,245,208,0.1)'
-}] )
+const chart1XAxis = ref( [
+  '13:00',
+  '13:05',
+  '13:10',
+  '13:15',
+  '13:20',
+  '13:25',
+  '13:30',
+  '13:35',
+  '13:40',
+  '13:45',
+  '13:50',
+  '13:55'
+] )
+const chart1Data = ref( [
+  {
+    name : 'CO',
+    color : 'rgb(160,114,245)',
+    data : [120, 110, 125, 145, 122, 165, 122, 220, 182, 191, 134, 150],
+    offset0 : 'rgba(160,114,245,0.27)',
+    offset1 : 'rgba(160,114,245,0)'
+  },
+  {
+    name : 'CO2',
+    color : 'rgb(245,237,91)',
+    data : [220, 182, 125, 145, 122, 191, 134, 150, 120, 110, 165, 122],
+    offset0 : 'rgba(245,237,91,0.27)',
+    offset1 : 'rgba(245,237,91,0)'
+  },
+  {
+    name : 'O2',
+    color : 'rgb(103,245,208)',
+    data : [110, 125, 145, 134, 150, 120, 110, 125, 145, 165, 122, 220],
+    offset0 : 'rgba(103,245,208,0.27)',
+    offset1 : 'rgba(103,245,208,0.1)'
+  }
+] )
 const chart2 = ref( null )
-const chart2XAxis = ref( ['13:00', '13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35', '13:40', '13:45', '13:50', '13:55'] )
+const chart2XAxis = ref( [
+  '13:00',
+  '13:05',
+  '13:10',
+  '13:15',
+  '13:20',
+  '13:25',
+  '13:30',
+  '13:35',
+  '13:40',
+  '13:45',
+  '13:50',
+  '13:55'
+] )
 const chart2Data = ref( [
   {
     name : 'C',
@@ -138,14 +164,26 @@ const chart2Data = ref( [
     offset1 : 'rgba(160,114,245,0)'
   }
 ] )
-const baseInfo = ref( { treatNo : '', treatStartTm : '', steelWeight : '', preC : '', aimCUpper : '',
-  aimCFloor : '', aimC : '', duringCTm : '', duringC : '', steelTemp : '', oxyVal : '', errorMsg : '' } )
+const baseInfo = ref( {
+  treatNo : '',
+  treatStartTm : '',
+  steelWeight : '',
+  preC : '',
+  aimCUpper : '',
+  aimCFloor : '',
+  aimC : '',
+  duringCTm : '',
+  duringC : '',
+  steelTemp : '',
+  oxyVal : '',
+  errorMsg : ''
+} )
 
 onMounted( () => {
   init()
 } )
 
-watch( station, ( newX ) => {
+watch( station, newX => {
   init()
   ElMessage( {
     message : '刷新成功！',
@@ -183,9 +221,7 @@ async function calcBtn() {
       duration : 3 * 1000
     } )
   } catch ( e ) {
-
   } finally {
-
   }
 }
 
@@ -211,9 +247,7 @@ async function refreWasteGas( param ) {
     chart1XAxis.value = tm
     chart1Data.value = chart1FormatData( coVals, co2Vals, o2Vals )
   } catch ( e ) {
-
   } finally {
-
   }
 }
 // 刷新脱碳量
@@ -234,9 +268,7 @@ async function refreOutCoxy( param ) {
     chart1XAxis.value = tm
     chart2Data.value = chart2FormatData( cVals )
   } catch ( e ) {
-
   } finally {
-
   }
 }
 // 设定值
@@ -247,9 +279,7 @@ async function refrebaseInfo( param ) {
     // console.log( { data } )
     baseInfo.value = { data }.data
   } catch ( e ) {
-
   } finally {
-
   }
 }
 
@@ -261,27 +291,29 @@ async function refrebaseInfo( param ) {
  * @returns {({color: string, data: *, name: string, offset0: string, offset1: string}|{color: string, data: *, name: string, offset0: string, offset1: string}|{color: string, data: *, name: string, offset0: string, offset1: string})[]}
  */
 function chart1FormatData( coVals, co2Vals, o2Vals ) {
-  return [{
-    name : 'CO',
-    color : 'rgb(160,114,245)',
-    data : coVals,
-    offset0 : 'rgba(160,114,245,0.27)',
-    offset1 : 'rgba(160,114,245,0)'
-  },
-  {
-    name : 'CO2',
-    color : 'rgb(245,237,91)',
-    data : co2Vals,
-    offset0 : 'rgba(245,237,91,0.27)',
-    offset1 : 'rgba(245,237,91,0)'
-  },
-  {
-    name : 'O2',
-    color : 'rgb(103,245,208)',
-    data : o2Vals,
-    offset0 : 'rgba(103,245,208,0.27)',
-    offset1 : 'rgba(103,245,208,0.1)'
-  }]
+  return [
+    {
+      name : 'CO',
+      color : 'rgb(160,114,245)',
+      data : coVals,
+      offset0 : 'rgba(160,114,245,0.27)',
+      offset1 : 'rgba(160,114,245,0)'
+    },
+    {
+      name : 'CO2',
+      color : 'rgb(245,237,91)',
+      data : co2Vals,
+      offset0 : 'rgba(245,237,91,0.27)',
+      offset1 : 'rgba(245,237,91,0)'
+    },
+    {
+      name : 'O2',
+      color : 'rgb(103,245,208)',
+      data : o2Vals,
+      offset0 : 'rgba(103,245,208,0.27)',
+      offset1 : 'rgba(103,245,208,0.1)'
+    }
+  ]
 }
 
 /**
@@ -310,7 +342,7 @@ defineOptions( {
 .chart-container {
   position: relative;
   width: 100%;
-  height: calc(100vh/2 - 84px);
+  height: calc(100vh / 2 - 84px);
 }
 .dashboard-editor-container {
   padding: 32px 32px 0px 32px;
@@ -326,8 +358,8 @@ defineOptions( {
       margin-bottom: 20px;
       box-shadow: 0 -3px 31px 0 rgb(0 0 0 / 5%), 0 6px 20px 0 rgb(0 0 0 / 2%);
       &:hover {
-         transition: all 0.3s;
-         transform: translateY(-6px);
+        transition: all 0.3s;
+        transform: translateY(-6px);
       }
     }
   }
@@ -339,7 +371,6 @@ defineOptions( {
       margin-bottom: 30px;
     }
   }
-
 }
 
 /* 右侧 */
@@ -370,7 +401,7 @@ defineOptions( {
     font-size: 24px;
     text-align: center;
   }
-  .radio{
+  .radio {
     text-align: center;
     padding-top: 20px;
   }
@@ -386,9 +417,9 @@ defineOptions( {
   border-radius: 0 0 3px 3px;
   box-sizing: content-box;
   height: 5vh;
-  .btn{
+  .btn {
     text-align: center;
-    button{
+    button {
       /*font-size: 24px;*/
     }
   }

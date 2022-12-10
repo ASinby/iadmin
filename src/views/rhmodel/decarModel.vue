@@ -4,13 +4,13 @@
       <el-col :span="5">
         <el-row>
           <el-col :span="24">
-            <div class="table-container" style="margin-bottom: 20px;">
+            <div class="table-container" style="margin-bottom: 20px">
               <div class="table-head">
                 <div class="table-head-title">计划与设定信息</div>
               </div>
               <div class="table-body">
-                <div class="center-col" style="height: 50vh;">
-                  <el-form label-position="right" label-width="100px" :model="baseInfo" style="padding: 5px;">
+                <div class="center-col" style="height: 50vh">
+                  <el-form label-position="right" label-width="100px" :model="baseInfo" style="padding: 5px">
                     <el-form-item label="处理号">
                       <el-input v-model="baseInfo.treatNo"></el-input>
                     </el-form-item>
@@ -25,11 +25,15 @@
                     </el-form-item>
                     <el-form-item label="设定吹氧量" style="position: relative">
                       <el-radio-group v-model="baseInfo.blowO2Mode">
-                        <el-radio :label='"1"'>不吹氧</el-radio>
-                        <el-radio :label='"2"'>预报量</el-radio>
-                        <el-radio :label='"3"'>设定量</el-radio>
+                        <el-radio :label="'1'">不吹氧</el-radio>
+                        <el-radio :label="'2'">预报量</el-radio>
+                        <el-radio :label="'3'">设定量</el-radio>
                       </el-radio-group>
-                      <el-input v-model="baseInfo.setO2" style="position: absolute;width: 100px;top: 30px;right: 35px;" v-if="showOxySet"></el-input>
+                      <el-input
+                        v-model="baseInfo.setO2"
+                        style="position: absolute; width: 100px; top: 30px; right: 35px"
+                        v-if="showOxySet"
+                      ></el-input>
                     </el-form-item>
                   </el-form>
                   <div class="radio">
@@ -47,13 +51,13 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <div class="table-container" style="margin-bottom: 20px;">
+            <div class="table-container" style="margin-bottom: 20px">
               <div class="table-head">
                 <div class="table-head-title">模型计算输出</div>
               </div>
               <div class="table-body">
-                <div class="center-col" style="height: 25vh;">
-                  <el-form label-position="right" label-width="100px" :model="baseInfo" style="padding: 5px;">
+                <div class="center-col" style="height: 25vh">
+                  <el-form label-position="right" label-width="100px" :model="baseInfo" style="padding: 5px">
                     <el-form-item label="程序开始时刻">
                       <el-input v-model="baseInfo.runTm"></el-input>
                     </el-form-item>
@@ -79,12 +83,12 @@
       <el-col :span="13">
         <el-row>
           <el-col :span="24">
-            <div class="table-container" style="margin-bottom: 20px;">
+            <div class="table-container" style="margin-bottom: 20px">
               <div class="table-head">
                 <div class="table-head-title">钢水处理信息</div>
               </div>
               <div class="table-body">
-                <div class="center-col" style="height: 11vh;">
+                <div class="center-col" style="height: 11vh">
                   <el-form :inline="true" :model="baseInfo" class="demo-form-inline">
                     <div class="form-row">
                       <el-form-item label="">
@@ -99,7 +103,11 @@
                     </div>
                     <div class="form-row">
                       <el-form-item label="">
-                        <el-input v-model="baseInfo.steelWeight" placeholder="钢水重量[kg]" title="钢水重量[kg]"></el-input>
+                        <el-input
+                          v-model="baseInfo.steelWeight"
+                          placeholder="钢水重量[kg]"
+                          title="钢水重量[kg]"
+                        ></el-input>
                       </el-form-item>
                       <el-form-item label="">
                         <el-input v-model="baseInfo.steelTemp" placeholder="钢水温度[℃]" title="钢水温度[℃]"></el-input>
@@ -114,7 +122,13 @@
         <el-row class="chats-container">
           <el-col :span="24">
             <div class="chart-wrapper chart-container" style="height: 67vh">
-              <LineMarker name="碳、游离氧预报曲线" id="chartCOxy" :chartData="coxyChartData" :xAxisData="chart1XAxis" yVal="ppm" />
+              <LineMarker
+                name="碳、游离氧预报曲线"
+                id="chartCOxy"
+                :chartData="coxyChartData"
+                :xAxisData="chart1XAxis"
+                yVal="ppm"
+              />
             </div>
           </el-col>
         </el-row>
@@ -126,26 +140,15 @@
           </div>
           <div class="table-body">
             <el-table
-                    :data="coxyTableData"
-                    :header-cell-style="{textAlign: 'center'}"
-                    :cell-style="{textAlign: 'center'}"
-                    style="width: 100%"
-                    height="80vh">
-              <el-table-column
-                      prop="tm"
-                      label="时间"
-                      width="120">
-              </el-table-column>
-              <el-table-column
-                      prop="cVal"
-                      label="碳"
-                      width="120">
-              </el-table-column>
-              <el-table-column
-                      prop="oxyVal"
-                      label="游离氧"
-                      width="120">
-              </el-table-column>
+              :data="coxyTableData"
+              :header-cell-style="{ textAlign: 'center' }"
+              :cell-style="{ textAlign: 'center' }"
+              style="width: 100%"
+              height="80vh"
+            >
+              <el-table-column prop="tm" label="时间" width="120"> </el-table-column>
+              <el-table-column prop="cVal" label="碳" width="120"> </el-table-column>
+              <el-table-column prop="oxyVal" label="游离氧" width="120"> </el-table-column>
             </el-table>
           </div>
         </div>
@@ -160,7 +163,24 @@ import LineMarker from './components/LineMarker'
 import { ElMessage } from 'element-plus'
 import { getBaseInfo, getOutCOxygen, doCalc } from '/@/api/decarmodel'
 
-const baseInfo = ref( { treatNo : '', stno : '', treatStartTm : '', aimOXP : '', setO2 : '', blowO2Mode : '1', runTm : 0, forecastO2 : 99, treatSpan : 0, killingC : 89, tips : 'hi', preC : '', preOXP : '', aimC : '', steelWeight : '', steelTemp : '' } )
+const baseInfo = ref( {
+  treatNo : '',
+  stno : '',
+  treatStartTm : '',
+  aimOXP : '',
+  setO2 : '',
+  blowO2Mode : '1',
+  runTm : 0,
+  forecastO2 : 99,
+  treatSpan : 0,
+  killingC : 89,
+  tips : 'hi',
+  preC : '',
+  preOXP : '',
+  aimC : '',
+  steelWeight : '',
+  steelTemp : ''
+} )
 const coxyTableData = ref( [] )
 const chart1XAxis = ref( [] )
 const coxyChartData = ref( [] )
@@ -171,9 +191,7 @@ onMounted( () => {
   init()
 } )
 
-onUnmounted( () => {
-
-} )
+onUnmounted( () => {} )
 
 // 初始化
 function init() {
@@ -189,9 +207,7 @@ async function refreBaseInfo( param ) {
     const { data } = await getBaseInfo( param )
     baseInfo.value = { data }.data
   } catch ( e ) {
-
   } finally {
-
   }
 }
 // 刷新碳和游离氧
@@ -213,27 +229,27 @@ async function refreOutCOxy( param ) {
     coxyChartData.value = chart1FormatData( cVals, oxyVals )
     // console.log( coxyChartData.value )
   } catch ( e ) {
-
   } finally {
-
   }
 }
 
 function chart1FormatData( cVals, oxyVals ) {
-  return [{
-    name : '碳',
-    color : 'rgb(160,114,245)',
-    data : cVals,
-    offset0 : 'rgba(160,114,245,0.27)',
-    offset1 : 'rgba(160,114,245,0)'
-  },
-  {
-    name : '游离氧',
-    color : 'rgb(245,237,91)',
-    data : oxyVals,
-    offset0 : 'rgba(245,237,91,0.27)',
-    offset1 : 'rgba(245,237,91,0)'
-  }]
+  return [
+    {
+      name : '碳',
+      color : 'rgb(160,114,245)',
+      data : cVals,
+      offset0 : 'rgba(160,114,245,0.27)',
+      offset1 : 'rgba(160,114,245,0)'
+    },
+    {
+      name : '游离氧',
+      color : 'rgb(245,237,91)',
+      data : oxyVals,
+      offset0 : 'rgba(245,237,91,0.27)',
+      offset1 : 'rgba(245,237,91,0)'
+    }
+  ]
 }
 
 // 刷新按键事件
@@ -257,8 +273,9 @@ async function calcBtn() {
 }
 
 // 监听setOxyCount变化 reactive类型数据
-watch( () => baseInfo.value.blowO2Mode,
-  ( blowO2Mode ) => {
+watch(
+  () => baseInfo.value.blowO2Mode,
+  blowO2Mode => {
     // 1不吹氧  2预报量  3设定量
     if ( blowO2Mode === '1' ) {
       showOxySet.value = false
@@ -271,10 +288,11 @@ watch( () => baseInfo.value.blowO2Mode,
       showOxySet.value = true
     }
     console.log( `blowO2Mode is: ${blowO2Mode}`, baseInfo.value.setO2 )
-  } )
+  }
+)
 
 // 监听station变化  ref类型数据
-watch( station, ( newX ) => {
+watch( station, newX => {
   // console.log(`x is ${newX}`)
   init()
   ElMessage( {
@@ -293,16 +311,26 @@ defineOptions( {
 .chart-container {
   position: relative;
   width: 100%;
-  height: calc(100vh/2 - 84px);
+  height: calc(100vh / 2 - 84px);
 }
 .dashboard-editor-container {
   padding: 32px 32px 0px 32px;
   background-color: rgb(240, 242, 245);
   position: relative;
 
-  .left-col {padding-right: 0px !important;margin-bottom: 0px;}
-  .center-col {padding-left: 0px !important;padding-right: 0px !important;margin-bottom: 0px;}
-  .right-col {padding-left: 0px !important;;margin-bottom: 0px;}
+  .left-col {
+    padding-right: 0px !important;
+    margin-bottom: 0px;
+  }
+  .center-col {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    margin-bottom: 0px;
+  }
+  .right-col {
+    padding-left: 0px !important;
+    margin-bottom: 0px;
+  }
 
   .chats-container {
     .chart-wrapper {
@@ -326,10 +354,9 @@ defineOptions( {
       margin-bottom: 30px;
     }
   }
-
 }
 /* 表格 */
-.table-container{
+.table-container {
   /*width: 100%;*/
 }
 .table-head {
@@ -343,7 +370,7 @@ defineOptions( {
   border-radius: 3px 3px 0px 0px;
   box-sizing: content-box;
   height: 4vh;
-  .table-head-title{
+  .table-head-title {
     position: absolute;
     padding: 5px;
   }
@@ -362,17 +389,17 @@ defineOptions( {
   /*height: 10vh;*/
 }
 /* 表单 */
-.form-row{
+.form-row {
   position: relative;
   text-align: center;
   top: 9px;
 }
 /* 单选工位 */
-.radio{
+.radio {
   text-align: center;
   padding-top: 20px;
 }
-.btn{
+.btn {
   text-align: center;
   margin: 3vh 0 0 0;
 }

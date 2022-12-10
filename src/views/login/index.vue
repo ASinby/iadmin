@@ -54,7 +54,7 @@ defineOptions( {
 </script>
 
 <style lang="scss" scoped>
-.login-box{
+.login-box {
   position: absolute;
   background-color: #ffffff;
   width: 100%;

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="dashboard-editor-container">
-      <el-row style="padding: 0px 0px 20px 0px;">
+      <el-row style="padding: 0px 0px 20px 0px">
         <el-col :xs="3" :sm="3" :lg="3">
           <div class="city-selected-head">
             <div class="radio">
@@ -58,152 +58,46 @@
             </div>
             <div class="table-body">
               <el-table
-                      :data="elemComs"
-                      :header-cell-style="{textAlign: 'center'}"
-                      :cell-style="{textAlign: 'center'}"
-                      border
-                      style="width: 100%"
-                      height="35vh">
-                <el-table-column
-                        fixed
-                        prop="flag"
-                        label="类型"
-                        width="150">
+                :data="elemComs"
+                :header-cell-style="{ textAlign: 'center' }"
+                :cell-style="{ textAlign: 'center' }"
+                border
+                style="width: 100%"
+                height="35vh"
+              >
+                <el-table-column fixed prop="flag" label="类型" width="150">
                   <template #default="scope">
-                    {{getTitle( scope.row.flag )}}
+                    {{ getTitle(scope.row.flag) }}
                   </template>
                 </el-table-column>
-                <el-table-column
-                        prop="cval"
-                        label="C"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="siVal"
-                        label="Si"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="mnVal"
-                        label="Mn"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="pval"
-                        label="P"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="sval"
-                        label="S"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="mgVal"
-                        label="Mg"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="crVal"
-                        label="Cr"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="niVal"
-                        label="Ni"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="moVal"
-                        label="Mo"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="cuVal"
-                        label="Cu"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="alVal"
-                        label="Al"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="tiVal"
-                        label="Ti"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="vval"
-                        label="V"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="nbVal"
-                        label="Nb"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="wval"
-                        label="W"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="bval"
-                        label="B"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="caVal"
-                        label="Ca"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="sbVal"
-                        label="Sb"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="asVal"
-                        label="As"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="snVal"
-                        label="Sn"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="pbVal"
-                        label="Pb"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="biVal"
-                        label="Bi"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="ceVal"
-                        label="Ce"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="coVal"
-                        label="Co"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="nval"
-                        label="N"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        fixed="right"
-                        label="操作"
-                        width="100">
+                <el-table-column prop="cval" label="C" width="120"> </el-table-column>
+                <el-table-column prop="siVal" label="Si" width="120"> </el-table-column>
+                <el-table-column prop="mnVal" label="Mn" width="120"> </el-table-column>
+                <el-table-column prop="pval" label="P" width="120"> </el-table-column>
+                <el-table-column prop="sval" label="S" width="120"> </el-table-column>
+                <el-table-column prop="mgVal" label="Mg" width="120"> </el-table-column>
+                <el-table-column prop="crVal" label="Cr" width="120"> </el-table-column>
+                <el-table-column prop="niVal" label="Ni" width="120"> </el-table-column>
+                <el-table-column prop="moVal" label="Mo" width="120"> </el-table-column>
+                <el-table-column prop="cuVal" label="Cu" width="120"> </el-table-column>
+                <el-table-column prop="alVal" label="Al" width="120"> </el-table-column>
+                <el-table-column prop="tiVal" label="Ti" width="120"> </el-table-column>
+                <el-table-column prop="vval" label="V" width="120"> </el-table-column>
+                <el-table-column prop="nbVal" label="Nb" width="120"> </el-table-column>
+                <el-table-column prop="wval" label="W" width="120"> </el-table-column>
+                <el-table-column prop="bval" label="B" width="120"> </el-table-column>
+                <el-table-column prop="caVal" label="Ca" width="120"> </el-table-column>
+                <el-table-column prop="sbVal" label="Sb" width="120"> </el-table-column>
+                <el-table-column prop="asVal" label="As" width="120"> </el-table-column>
+                <el-table-column prop="snVal" label="Sn" width="120"> </el-table-column>
+                <el-table-column prop="pbVal" label="Pb" width="120"> </el-table-column>
+                <el-table-column prop="biVal" label="Bi" width="120"> </el-table-column>
+                <el-table-column prop="ceVal" label="Ce" width="120"> </el-table-column>
+                <el-table-column prop="coVal" label="Co" width="120"> </el-table-column>
+                <el-table-column prop="nval" label="N" width="120"> </el-table-column>
+                <el-table-column fixed="right" label="操作" width="100">
                   <template #default="scope">
-                    <template v-if="scope.row.flag>4">
+                    <template v-if="scope.row.flag > 4">
                       <el-button @click="handleUpdate(scope.row)" type="text" size="small">编辑</el-button>
                     </template>
                   </template>
@@ -213,16 +107,15 @@
           </div>
         </el-col>
       </el-row>
-      <el-row style="padding: 20px 0px 0px 0px;">
+      <el-row style="padding: 20px 0px 0px 0px">
         <el-col :span="24">
           <div class="table-container">
             <div class="table-head">
               <div class="table-head-title">合金计算结果</div>
-              <div style="position: absolute;right: 30px;top: 4px;">
-                <el-form :inline="true" :model="formOfAl" class="demo-form-inline"> <!-- :rules="set.rules" -->
-                  <el-form-item>
-                    -屏蔽设1；解除设0-
-                  </el-form-item>
+              <div style="position: absolute; right: 30px; top: 4px">
+                <el-form :inline="true" :model="formOfAl" class="demo-form-inline">
+                  <!-- :rules="set.rules" -->
+                  <el-form-item> -屏蔽设1；解除设0- </el-form-item>
                   <el-form-item prop="number" label="脱氧铝[kg]">
                     <el-input v-model="formOfAl.deoAl" placeholder="脱氧铝[kg]" title="脱氧铝[kg]"></el-input>
                   </el-form-item>
@@ -237,33 +130,22 @@
             </div>
             <div class="table-body">
               <el-table
-                      :data="rowsData"
-                      :header-cell-style="{textAlign: 'center'}"
-                      :cell-style="{textAlign: 'center'}"
-                      border
-                      style="width: 100%"
-                      height="29vh">
+                :data="rowsData"
+                :header-cell-style="{ textAlign: 'center' }"
+                :cell-style="{ textAlign: 'center' }"
+                border
+                style="width: 100%"
+                height="29vh"
+              >
                 <template v-for="(item, index) in headerData" :key="index">
                   <template v-if="index == 0">
-                    <el-table-column
-                            fixed
-                            :prop="item"
-                            label="料仓号"
-                            width="120">
-                    </el-table-column>
+                    <el-table-column fixed :prop="item" label="料仓号" width="120"> </el-table-column>
                   </template>
                   <template v-else>
-                    <el-table-column
-                            :prop="item"
-                            :label="item"
-                            width="120">
-                    </el-table-column>
+                    <el-table-column :prop="item" :label="item" width="120"> </el-table-column>
                   </template>
                   <template v-if="index == headerData.length - 1">
-                    <el-table-column
-                            fixed="right"
-                            label="操作"
-                            width="100">
+                    <el-table-column fixed="right" label="操作" width="100">
                       <template #default="scope">
                         <template v-if="scope.row.rowsHeader === '合金屏蔽' || scope.row.rowsHeader === '设定量'">
                           <el-button @click="handleUpdateOfCalc(scope.row)" type="text" size="small">编辑</el-button>
@@ -285,7 +167,8 @@
     </div>
 
     <el-dialog :title="dialogTitle" v-model="dialogFormVisible" width="60%">
-      <el-form :inline="true" :ref="dataForm" :model="dialogData" label-widht="100px">  <!-- :rules="set.rules" -->
+      <el-form :inline="true" :ref="dataForm" :model="dialogData" label-widht="100px">
+        <!-- :rules="set.rules" -->
         <div class="form-row">
           <el-form-item prop="cVal" label="C">
             <el-input v-model="dialogData.cval" placeholder=""></el-input>
@@ -491,7 +374,15 @@ const station = ref( '1' )
 // const elemName = { cVal : 'C', siVal : 'Si', mnVal : 'Mn', pVal : 'P', sVal : 'S', mgVal : 'Mg', crVal : 'Cr', niVal : 'Ni', moVal : 'Mo', cuVal : 'Cu', alVal : 'Al',
 //   tiVal : 'Ti', vVal  : 'V', nbVal : 'Nb', wVal  : 'W', bVal  : 'B', caVal : 'Ca', sbVal : 'Sb', asVal : 'As', snVal : 'Sn', pbVal : 'Pb', biVal : 'Bi', ceVal : 'Ce' }
 // 炉次基本信息
-const baseInfo = ref( { treatNo : '123001', stno : '', steelWeight : '', preOxp : '', treatStartTm : '', alloyAddWeight : '', alloyAllCost : '' } )
+const baseInfo = ref( {
+  treatNo : '123001',
+  stno : '',
+  steelWeight : '',
+  preOxp : '',
+  treatStartTm : '',
+  alloyAddWeight : '',
+  alloyAllCost : ''
+} )
 // 脱氧铝、加热铝
 const formOfAl = ref( { deoAl : '', heatAl : '' } )
 // 弹窗是否显示标志 元素
@@ -714,7 +605,7 @@ const hideDialog = () => {
   dialogFormVisible.value = false
 }
 
-watch( station, ( newX ) => {
+watch( station, newX => {
   init()
   ElMessage( {
     message : '刷新成功！',
@@ -760,10 +651,10 @@ function rowColChange() {
   // 行头  合金牌名、合金屏蔽、设定量、计算量
   const rowsHeader = ['matName', 'ifok', 'matSetw', 'matCalw']
   const rowsHeaderCN = {
-    'matName' : '合金牌名',
-    'ifok' : '合金屏蔽',
-    'matSetw' : '设定量',
-    'matCalw' : '计算量'
+    matName : '合金牌名',
+    ifok : '合金屏蔽',
+    matSetw : '设定量',
+    matCalw : '计算量'
   }
   // 1、将 料仓号 作为表头
   const tempHeader = []
@@ -810,9 +701,7 @@ async function updateData() {
       duration : 3 * 1000
     } )
   } catch ( e ) {
-
   } finally {
-
   }
 }
 // 查看行数据  合金计算结果
@@ -844,7 +733,7 @@ defineOptions( {
 .chart-container {
   position: relative;
   width: 100%;
-  height: calc(100vh/2 - 84px);
+  height: calc(100vh / 2 - 84px);
 }
 .dashboard-editor-container {
   padding: 32px 32px 32px 32px;
@@ -873,14 +762,14 @@ defineOptions( {
   border-radius: 3px 0px 0px 3px;
   box-sizing: content-box;
   height: 10vh;
-  .radio{
+  .radio {
     text-align: center;
     margin: 3vh 0 0 0;
   }
 }
 .city-selected-body {
   font-size: 14px;
-  padding: 0px;  /* 20px */
+  padding: 0px; /* 20px */
   font-weight: 400;
   background-color: #dee2e6;
   position: relative;
@@ -901,14 +790,14 @@ defineOptions( {
   border-radius: 0px 3px 3px 0px;
   box-sizing: content-box;
   height: 10vh;
-  .btn{
+  .btn {
     text-align: center;
     margin: 3vh 0 0 0;
   }
 }
-.table-container{
+.table-container {
   /*padding-left: 10px;
-  padding-right: 10px*/;
+  padding-right: 10px*/
 }
 .table-head {
   font-size: 20px;
@@ -921,7 +810,7 @@ defineOptions( {
   border-radius: 3px 3px 0px 0px;
   box-sizing: content-box;
   height: 4vh;
-  .table-head-title{
+  .table-head-title {
     position: absolute;
     padding: 5px;
   }
@@ -939,13 +828,13 @@ defineOptions( {
   /*height: 10vh;*/
 }
 /* 表单 */
-.form-row{
+.form-row {
   position: relative;
   text-align: center;
   top: 9px;
 }
 /* 弹窗 */
-.dialog-footer{
+.dialog-footer {
   text-align: right;
 }
 /*  */

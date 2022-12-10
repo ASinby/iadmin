@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-editor-container">
-    <el-row :gutter="20" style="padding: 0px 0px 20px 0px;">
+    <el-row :gutter="20" style="padding: 0px 0px 20px 0px">
       <el-col :xs="3" :sm="3" :lg="3" class="left-col">
         <div class="city-selected-head">
           <div class="radio">
@@ -20,13 +20,25 @@
                 <el-input v-model="baseInfo.stStatus" placeholder="钢包状况" title="钢包状况"></el-input>
               </el-form-item>
               <el-form-item label="">
-                <el-input v-model="baseInfo.vacTankTemp" placeholder="当前真空槽处理温度" title="当前真空槽处理温度"></el-input>
+                <el-input
+                  v-model="baseInfo.vacTankTemp"
+                  placeholder="当前真空槽处理温度"
+                  title="当前真空槽处理温度"
+                ></el-input>
               </el-form-item>
               <el-form-item label="">
-                <el-input v-model="baseInfo.vacTankAlAdd" placeholder="真空槽烘烤AL补正量[KG]" title="真空槽烘烤AL补正量[KG]"></el-input>
+                <el-input
+                  v-model="baseInfo.vacTankAlAdd"
+                  placeholder="真空槽烘烤AL补正量[KG]"
+                  title="真空槽烘烤AL补正量[KG]"
+                ></el-input>
               </el-form-item>
               <el-form-item label="">
-                <el-input v-model="baseInfo.treatStartTm" placeholder="RH处理开始时刻" title="RH处理开始时刻"></el-input>
+                <el-input
+                  v-model="baseInfo.treatStartTm"
+                  placeholder="RH处理开始时刻"
+                  title="RH处理开始时刻"
+                ></el-input>
               </el-form-item>
             </div>
             <div class="form-row">
@@ -37,10 +49,18 @@
                 <el-input v-model="baseInfo.steelWeight" placeholder="钢水重量" title="钢水重量"></el-input>
               </el-form-item>
               <el-form-item label="">
-                <el-input v-model="baseInfo.treatSpan" placeholder="计划处理时间[0.1分]" title="计划处理时间[0.1分]"></el-input>
+                <el-input
+                  v-model="baseInfo.treatSpan"
+                  placeholder="计划处理时间[0.1分]"
+                  title="计划处理时间[0.1分]"
+                ></el-input>
               </el-form-item>
               <el-form-item label="">
-                <el-input v-model="baseInfo.vacTankTempAdd" placeholder="真空槽温度补正[℃]" title="真空槽温度补正[℃]"></el-input>
+                <el-input
+                  v-model="baseInfo.vacTankTempAdd"
+                  placeholder="真空槽温度补正[℃]"
+                  title="真空槽温度补正[℃]"
+                ></el-input>
               </el-form-item>
               <el-form-item label="">
                 <el-input v-model="baseInfo.treatEndTm" placeholder="RH处理结束时刻" title="RH处理结束时刻"></el-input>
@@ -64,62 +84,46 @@
         <el-row>
           <el-col :xs="24" :sm="24" :lg="24">
             <div class="chart-wrapper chart-container">
-              <LineMarker name="温度趋势" id="chartTempModel" :chartData="chart1Data" :xAxisData="chart1XAxis" yVal="℃" />
+              <LineMarker
+                name="温度趋势"
+                id="chartTempModel"
+                :chartData="chart1Data"
+                :xAxisData="chart1XAxis"
+                yVal="℃"
+              />
             </div>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :xs="12" :sm="12" :lg="12" style="padding-right: 10px;">
+          <el-col :xs="12" :sm="12" :lg="12" style="padding-right: 10px">
             <div class="table-container">
               <div class="table-head">
                 <div class="table-head-title">合金信息</div>
               </div>
               <div class="table-body">
                 <el-table
-                        :data="alloyInfo"
-                        :header-cell-style="{textAlign: 'center'}"
-                        :cell-style="{textAlign: 'center'}"
-                        style="width: 100%"
-                        height="25vh">
-                  <el-table-column
-                          fixed
-                          prop="matCode"
-                          label="物料编号"
-                          width="120">
-                  </el-table-column>
-                  <el-table-column
-                          prop="matType"
-                          label="物料类型"
-                          width="120">
-                  </el-table-column>
-                  <el-table-column
-                          prop="matName"
-                          label="物料描述"
-                          width="150">
-                  </el-table-column>
-                  <el-table-column
-                          prop="matAmount"
-                          label="物料重量"
-                          width="120">
-                  </el-table-column>
-                  <el-table-column
-                          prop="manualFlag"
-                          label="手投料标志"
-                          width="120">
-                  </el-table-column>
+                  :data="alloyInfo"
+                  :header-cell-style="{ textAlign: 'center' }"
+                  :cell-style="{ textAlign: 'center' }"
+                  style="width: 100%"
+                  height="25vh"
+                >
+                  <el-table-column fixed prop="matCode" label="物料编号" width="120"> </el-table-column>
+                  <el-table-column prop="matType" label="物料类型" width="120"> </el-table-column>
+                  <el-table-column prop="matName" label="物料描述" width="150"> </el-table-column>
+                  <el-table-column prop="matAmount" label="物料重量" width="120"> </el-table-column>
+                  <el-table-column prop="manualFlag" label="手投料标志" width="120"> </el-table-column>
                 </el-table>
               </div>
             </div>
           </el-col>
-          <el-col :xs="12" :sm="12" :lg="12" style="padding-left: 10px;">
+          <el-col :xs="12" :sm="12" :lg="12" style="padding-left: 10px">
             <div class="table-container">
               <div class="table-head">
                 <div class="table-head-title">吹氧信息</div>
               </div>
               <div class="table-body">
-                <el-table style="width: 100%" height="25vh">
-
-                </el-table>
+                <el-table style="width: 100%" height="25vh"> </el-table>
                 <!--<el-table
                         :data="tableData"
                         style="width: 100%"
@@ -163,33 +167,22 @@
       </el-col>
       <el-col :xs="8" :sm="8" :lg="8">
         <el-row>
-          <el-col :span="24" style="padding-right: 10px;">
+          <el-col :span="24" style="padding-right: 10px">
             <div class="table-container">
               <div class="table-head">
                 <div class="table-head-title">温度</div>
-                </div>
+              </div>
               <div class="table-body">
                 <el-table
-                        :data="tempData"
-                        :header-cell-style="{textAlign: 'center'}"
-                        :cell-style="{textAlign: 'center'}"
-                        style="width: 100%"
-                        height="68vh">
-                  <el-table-column
-                          prop="id"
-                          label="时间"
-                          width="170">
-                  </el-table-column>
-                  <el-table-column
-                          prop="tempPre"
-                          label="预测温度"
-                          width="170">
-                  </el-table-column>
-                  <el-table-column
-                          prop="tempAct"
-                          label="实际温度"
-                          width="170">
-                  </el-table-column>
+                  :data="tempData"
+                  :header-cell-style="{ textAlign: 'center' }"
+                  :cell-style="{ textAlign: 'center' }"
+                  style="width: 100%"
+                  height="68vh"
+                >
+                  <el-table-column prop="id" label="时间" width="170"> </el-table-column>
+                  <el-table-column prop="tempPre" label="预测温度" width="170"> </el-table-column>
+                  <el-table-column prop="tempAct" label="实际温度" width="170"> </el-table-column>
                 </el-table>
               </div>
             </div>
@@ -207,24 +200,50 @@ import LineMarker from './components/LineMarker'
 import { getBaseInfo, getTempData, getAlloyInfo, getBlastOxyInfo, doCalc } from '/@/api/tempmodel'
 
 const station = ref( '1' )
-const baseInfo = ref( { treatNo : '', stStatus : '', vacTankTemp : '', vacTankAlAdd : '', treatStartTm : '', stno : '', steelWeight : '', treatSpan : '', vacTankTempAdd : '', treatEndTm : '' } )
+const baseInfo = ref( {
+  treatNo : '',
+  stStatus : '',
+  vacTankTemp : '',
+  vacTankAlAdd : '',
+  treatStartTm : '',
+  stno : '',
+  steelWeight : '',
+  treatSpan : '',
+  vacTankTempAdd : '',
+  treatEndTm : ''
+} )
 
 const tempData = ref( [] )
-const chart1XAxis = ref( ['13:00', '13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35', '13:40', '13:45', '13:50', '13:55'] )
-const chart1Data = ref( [{
-  name : '实际',
-  color : 'rgb(160,114,245)',
-  data : [120, 110, 125, 145, 122, 165, 122, 220, 182, 191, 134, 150],
-  offset0 : 'rgba(160,114,245,0.27)',
-  offset1 : 'rgba(160,114,245,0)'
-},
-{
-  name : '预测',
-  color : 'rgb(245,237,91)',
-  data : [220, 182, 125, 145, 122, 191, 134, 150, 120, 110, 165, 122],
-  offset0 : 'rgba(245,237,91,0.27)',
-  offset1 : 'rgba(245,237,91,0)'
-}] )
+const chart1XAxis = ref( [
+  '13:00',
+  '13:05',
+  '13:10',
+  '13:15',
+  '13:20',
+  '13:25',
+  '13:30',
+  '13:35',
+  '13:40',
+  '13:45',
+  '13:50',
+  '13:55'
+] )
+const chart1Data = ref( [
+  {
+    name : '实际',
+    color : 'rgb(160,114,245)',
+    data : [120, 110, 125, 145, 122, 165, 122, 220, 182, 191, 134, 150],
+    offset0 : 'rgba(160,114,245,0.27)',
+    offset1 : 'rgba(160,114,245,0)'
+  },
+  {
+    name : '预测',
+    color : 'rgb(245,237,91)',
+    data : [220, 182, 125, 145, 122, 191, 134, 150, 120, 110, 165, 122],
+    offset0 : 'rgba(245,237,91,0.27)',
+    offset1 : 'rgba(245,237,91,0)'
+  }
+] )
 const alloyInfo = ref( [
   { matCode : '1', matType : '', matName : '', matAmount : '', manualFlag : '' },
   { matCode : '2', matType : '', matName : '', matAmount : '', manualFlag : '' },
@@ -235,7 +254,7 @@ onMounted( () => {
   init()
 } )
 
-watch( station, ( newVal ) => {
+watch( station, newVal => {
   init()
   ElMessage( {
     message : '刷新成功！',
@@ -277,9 +296,7 @@ async function refreTempData( param ) {
     chart1XAxis.value = tm
     chart1Data.value = chart1FormatData( tempActs, tempPres )
   } catch ( e ) {
-
   } finally {
-
   }
 }
 async function refreAlloyInfo( param ) {
@@ -320,20 +337,22 @@ async function calcBtn() {
  * @returns {({color: string, data: *, name: string, offset0: string, offset1: string}|{color: string, data: *, name: string, offset0: string, offset1: string})[]}
  */
 function chart1FormatData( tempActs, tempPres ) {
-  return [{
-    name : '实际',
-    color : 'rgb(160,114,245)',
-    data : tempActs,
-    offset0 : 'rgba(160,114,245,0.27)',
-    offset1 : 'rgba(160,114,245,0)'
-  },
-  {
-    name : '预测',
-    color : 'rgb(245,237,91)',
-    data : tempPres,
-    offset0 : 'rgba(245,237,91,0.27)',
-    offset1 : 'rgba(245,237,91,0)'
-  }]
+  return [
+    {
+      name : '实际',
+      color : 'rgb(160,114,245)',
+      data : tempActs,
+      offset0 : 'rgba(160,114,245,0.27)',
+      offset1 : 'rgba(160,114,245,0)'
+    },
+    {
+      name : '预测',
+      color : 'rgb(245,237,91)',
+      data : tempPres,
+      offset0 : 'rgba(245,237,91,0.27)',
+      offset1 : 'rgba(245,237,91,0)'
+    }
+  ]
 }
 
 defineOptions( {
@@ -345,16 +364,26 @@ defineOptions( {
 .chart-container {
   position: relative;
   width: 100%;
-  height: calc(100vh/2 - 84px);
+  height: calc(100vh / 2 - 84px);
 }
 .dashboard-editor-container {
   padding: 32px 32px 32px 32px;
   background-color: rgb(240, 242, 245);
   position: relative;
 
-  .left-col {padding-right: 0px !important;margin-bottom: 0px;}
-  .center-col {padding-left: 0px !important;padding-right: 0px !important;margin-bottom: 0px;}
-  .right-col {padding-left: 0px !important;;margin-bottom: 0px;}
+  .left-col {
+    padding-right: 0px !important;
+    margin-bottom: 0px;
+  }
+  .center-col {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    margin-bottom: 0px;
+  }
+  .right-col {
+    padding-left: 0px !important;
+    margin-bottom: 0px;
+  }
 
   .chats-container {
     .chart-wrapper {
@@ -378,7 +407,6 @@ defineOptions( {
       margin-bottom: 30px;
     }
   }
-
 }
 .card {
   background: #fff;
@@ -402,14 +430,14 @@ defineOptions( {
   border-radius: 3px 0px 0px 3px;
   box-sizing: content-box;
   height: 10vh;
-  .radio{
+  .radio {
     text-align: center;
     margin: 3vh 0 0 0;
   }
 }
 .city-selected-body {
   font-size: 14px;
-  padding: 0px;  /* 20px */
+  padding: 0px; /* 20px */
   font-weight: 400;
   background-color: #dee2e6;
   position: relative;
@@ -430,14 +458,14 @@ defineOptions( {
   border-radius: 0px 3px 3px 0px;
   box-sizing: content-box;
   height: 10vh;
-  .btn{
+  .btn {
     text-align: center;
     margin: 3vh 0 0 0;
   }
 }
-.table-container{
+.table-container {
   /*padding-left: 10px;
-  padding-right: 10px*/;
+  padding-right: 10px*/
 }
 .table-head {
   font-size: 20px;
@@ -450,7 +478,7 @@ defineOptions( {
   border-radius: 3px 3px 0px 0px;
   box-sizing: content-box;
   height: 4vh;
-  .table-head-title{
+  .table-head-title {
     position: absolute;
     padding: 5px;
   }
@@ -468,7 +496,7 @@ defineOptions( {
   /*height: 10vh;*/
 }
 /* 表单 */
-.form-row{
+.form-row {
   position: relative;
   text-align: center;
   top: 9px;
