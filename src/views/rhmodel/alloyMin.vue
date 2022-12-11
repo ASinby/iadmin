@@ -144,27 +144,32 @@
                 style="width: 100%"
                 height="29vh"
               >
-                <el-table-column v-for="tableHeader in tableHeaders"
-                                 :key="tableHeader.prop"
-                                 :fixed="tableHeader.prop == 'rowsHeader'"
-                                 :prop="tableHeader.prop"
-                                 :label="tableHeader.lable"
-                                 width="150">
+                <el-table-column
+                  v-for="tableHeader in tableHeaders"
+                  :key="tableHeader.prop"
+                  :fixed="tableHeader.prop == 'rowsHeader'"
+                  :prop="tableHeader.prop"
+                  :label="tableHeader.lable"
+                  width="150"
+                >
                   <template #default="scope">
                     <template v-if="scope.row.edit && tableHeader.prop != 'rowsHeader'">
                       <!--<el-input v-model="scope.row[tableHeader.prop]" class="edit-input" size="small" />-->
                       <el-switch
-                              v-model="scope.row[tableHeader.prop]"
-                              active-text="屏蔽"
-                              inactive-text="解除"
-                              :active-value="1"
-                              :inactive-value="0"
-                              :width="10">
+                        v-model="scope.row[tableHeader.prop]"
+                        active-text="屏蔽"
+                        inactive-text="解除"
+                        :active-value="1"
+                        :inactive-value="0"
+                        :width="10"
+                      >
                       </el-switch>
                     </template>
                     <span v-else>
                       <template v-if="tableHeader.prop != 'rowsHeader' && scope.row.rowsHeader === '合金屏蔽'">
-                        <el-tag :type="statusFilter(scope.row[tableHeader.prop])">{{ scope.row[tableHeader.prop] === 1?'屏蔽':'解除' }}</el-tag>
+                        <el-tag :type="statusFilter(scope.row[tableHeader.prop])">{{
+                          scope.row[tableHeader.prop] === 1 ? '屏蔽' : '解除'
+                        }}</el-tag>
                       </template>
                       <template v-else>
                         {{ scope.row[tableHeader.prop] }}
@@ -175,9 +180,25 @@
                 <el-table-column fixed="right" label="操作" width="150">
                   <template #default="scope">
                     <template v-if="scope.row.rowsHeader === '合金屏蔽' || scope.row.rowsHeader === '设定量'">
-                      <el-button v-if="!scope.row.edit" @click="scope.row.edit = !scope.row.edit" type="text" size="small">编辑</el-button>
-                      <el-button v-if="scope.row.edit" @click="handleUpdateOfCalc(scope.row)" type="text" size="small">保存</el-button>
-                      <el-button v-if="scope.row.edit" @click="cancelEdit(scope.row)" type="text" size="small">取消</el-button>
+                      <el-button
+                        v-if="!scope.row.edit"
+                        @click="scope.row.edit = !scope.row.edit"
+                        type="text"
+                        size="small"
+                        >编辑</el-button
+                      >
+                      <el-button v-if="scope.row.edit"
+@click="handleUpdateOfCalc(scope.row)"
+type="text"
+size="small"
+                        >保存</el-button
+                      >
+                      <el-button v-if="scope.row.edit"
+@click="cancelEdit(scope.row)"
+type="text"
+size="small"
+                        >取消</el-button
+                      >
                     </template>
                   </template>
                 </el-table-column>
