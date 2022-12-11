@@ -38,10 +38,15 @@
           <div style="padding: 8px">
             <el-form :label-position="left" label-width="120px" :model="baseInfo">
               <el-form-item label="处理号">
-                <el-input v-model="baseInfo.treatNo"></el-input>
+                <el-input v-model="baseInfo.treatno"></el-input>
               </el-form-item>
               <el-form-item label="处理开始时刻">
-                <el-input v-model="baseInfo.treatStartTm"></el-input>
+                <!--<el-input v-model="baseInfo.treatStartTm"></el-input>-->
+                <el-date-picker
+                        v-model="baseInfo.treatStartTm"
+                        type="datetime"
+                        placeholder="处理开始时刻">
+                </el-date-picker>
               </el-form-item>
               <el-form-item label="钢水重量[kg]">
                 <el-input v-model="baseInfo.steelWeight"></el-input>
@@ -59,7 +64,12 @@
                 <el-input v-model="baseInfo.aimC"></el-input>
               </el-form-item>
               <el-form-item label="过程碳取样时刻">
-                <el-input v-model="baseInfo.duringCTm"></el-input>
+                <!--<el-input v-model="baseInfo.duringCTm"></el-input>-->
+                <el-date-picker
+                        v-model="baseInfo.duringCTm"
+                        type="datetime"
+                        placeholder="过程碳取样时刻">
+                </el-date-picker>
               </el-form-item>
               <el-form-item label="过程C含量[%]">
                 <el-input v-model="baseInfo.duringC"></el-input>
@@ -71,7 +81,7 @@
                 <el-input v-model="baseInfo.oxyVal"></el-input>
               </el-form-item>
               <el-form-item label="错误">
-                <el-input v-model="baseInfo.errorMsg"></el-input>
+                <el-input v-model="baseInfo.tips"></el-input>
               </el-form-item>
             </el-form>
           </div>
@@ -165,7 +175,7 @@ const chart2Data = ref( [
   }
 ] )
 const baseInfo = ref( {
-  treatNo : '',
+  treatno : '',
   treatStartTm : '',
   steelWeight : '',
   preC : '',
@@ -176,7 +186,7 @@ const baseInfo = ref( {
   duringC : '',
   steelTemp : '',
   oxyVal : '',
-  errorMsg : ''
+  tips : ''
 } )
 
 onMounted( () => {

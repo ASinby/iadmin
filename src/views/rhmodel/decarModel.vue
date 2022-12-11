@@ -12,13 +12,18 @@
                 <div class="center-col" style="height: 50vh">
                   <el-form label-position="right" label-width="100px" :model="baseInfo" style="padding: 5px">
                     <el-form-item label="处理号">
-                      <el-input v-model="baseInfo.treatNo"></el-input>
+                      <el-input v-model="baseInfo.treatno"></el-input>
                     </el-form-item>
                     <el-form-item label="出钢记号">
                       <el-input v-model="baseInfo.stno"></el-input>
                     </el-form-item>
                     <el-form-item label="开始处理时刻">
-                      <el-input v-model="baseInfo.treatStartTm"></el-input>
+                      <!--<el-input v-model="baseInfo.treatStartTm"></el-input>-->
+                      <el-date-picker
+                              v-model="baseInfo.treatStartTm"
+                              type="datetime"
+                              placeholder="开始处理时刻">
+                      </el-date-picker>
                     </el-form-item>
                     <el-form-item label="目标OXP">
                       <el-input v-model="baseInfo.aimOXP"></el-input>
@@ -59,7 +64,12 @@
                 <div class="center-col" style="height: 25vh">
                   <el-form label-position="right" label-width="100px" :model="baseInfo" style="padding: 5px">
                     <el-form-item label="程序开始时刻">
-                      <el-input v-model="baseInfo.runTm"></el-input>
+                      <!--<el-input v-model="baseInfo.runTm"></el-input>-->
+                      <el-date-picker
+                              v-model="baseInfo.runTm"
+                              type="datetime"
+                              placeholder="程序开始时刻">
+                      </el-date-picker>
                     </el-form-item>
                     <el-form-item label="预报吹氧量">
                       <el-input v-model="baseInfo.forecastO2"></el-input>
@@ -164,7 +174,7 @@ import { ElMessage } from 'element-plus'
 import { getBaseInfo, getOutCOxygen, doCalc } from '/@/api/decarmodel'
 
 const baseInfo = ref( {
-  treatNo : '',
+  treatno : '',
   stno : '',
   treatStartTm : '',
   aimOXP : '',

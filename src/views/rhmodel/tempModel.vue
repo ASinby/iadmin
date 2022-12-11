@@ -14,7 +14,7 @@
           <el-form :inline="true" :model="baseInfo" class="demo-form-inline">
             <div class="form-row">
               <el-form-item label="">
-                <el-input v-model="baseInfo.treatNo" placeholder="处理号" title="处理号"></el-input>
+                <el-input v-model="baseInfo.treatno" placeholder="处理号" title="处理号"></el-input>
               </el-form-item>
               <el-form-item label="">
                 <el-input v-model="baseInfo.stStatus" placeholder="钢包状况" title="钢包状况"></el-input>
@@ -34,11 +34,17 @@
                 ></el-input>
               </el-form-item>
               <el-form-item label="">
-                <el-input
+                <!--<el-input
                   v-model="baseInfo.treatStartTm"
                   placeholder="RH处理开始时刻"
                   title="RH处理开始时刻"
-                ></el-input>
+                ></el-input>-->
+                <el-date-picker
+                        v-model="baseInfo.treatStartTm"
+                        type="datetime"
+                        placeholder="处理开始时刻"
+                        title="处理开始时刻">
+                </el-date-picker>
               </el-form-item>
             </div>
             <div class="form-row">
@@ -63,7 +69,13 @@
                 ></el-input>
               </el-form-item>
               <el-form-item label="">
-                <el-input v-model="baseInfo.treatEndTm" placeholder="RH处理结束时刻" title="RH处理结束时刻"></el-input>
+                <!--<el-input v-model="baseInfo.treatEndTm" placeholder="RH处理结束时刻" title="RH处理结束时刻"></el-input>-->
+                <el-date-picker
+                        v-model="baseInfo.treatEndTm"
+                        type="datetime"
+                        placeholder="处理结束时刻"
+                        title="处理结束时刻">
+                </el-date-picker>
               </el-form-item>
             </div>
           </el-form>
@@ -201,7 +213,7 @@ import { getBaseInfo, getTempData, getAlloyInfo, getBlastOxyInfo, doCalc } from 
 
 const station = ref( '1' )
 const baseInfo = ref( {
-  treatNo : '',
+  treatno : '',
   stStatus : '',
   vacTankTemp : '',
   vacTankAlAdd : '',

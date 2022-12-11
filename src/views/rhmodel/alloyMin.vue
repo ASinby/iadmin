@@ -15,7 +15,7 @@
             <el-form :inline="true" :model="baseInfo" class="demo-form-inline">
               <div class="form-row">
                 <el-form-item label="">
-                  <el-input v-model="baseInfo.treatNo" placeholder="处理号" title="处理号"></el-input>
+                  <el-input v-model="baseInfo.treatno" placeholder="处理号" title="处理号"></el-input>
                 </el-form-item>
                 <el-form-item label="">
                   <el-input v-model="baseInfo.stno" placeholder="出钢记号" title="出钢记号"></el-input>
@@ -29,7 +29,13 @@
                   <el-input v-model="baseInfo.preOxp" placeholder="游离氧浓度[%]" title="游离氧浓度[%]"></el-input>
                 </el-form-item>
                 <el-form-item label="">
-                  <el-input v-model="baseInfo.treatStartTm" placeholder="处理开始时刻" title="处理开始时刻"></el-input>
+                  <!--<el-input v-model="baseInfo.treatStartTm" placeholder="处理开始时刻" title="处理开始时刻"></el-input>-->
+                  <el-date-picker
+                          v-model="baseInfo.treatStartTm"
+                          type="datetime"
+                          placeholder="处理开始时刻"
+                          title="处理开始时刻">
+                  </el-date-picker>
                 </el-form-item>
                 <el-form-item label="">
                   <el-input v-model="baseInfo.alloyAddWeight" placeholder="增重[吨]" title="增重[吨]"></el-input>
@@ -375,7 +381,7 @@ const station = ref( '1' )
 //   tiVal : 'Ti', vVal  : 'V', nbVal : 'Nb', wVal  : 'W', bVal  : 'B', caVal : 'Ca', sbVal : 'Sb', asVal : 'As', snVal : 'Sn', pbVal : 'Pb', biVal : 'Bi', ceVal : 'Ce' }
 // 炉次基本信息
 const baseInfo = ref( {
-  treatNo : '123001',
+  treatno : '123001',
   stno : '',
   steelWeight : '',
   preOxp : '',

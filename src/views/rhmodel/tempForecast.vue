@@ -14,7 +14,7 @@
           <el-form :inline="true" :model="baseInfo" class="demo-form-inline">
             <div class="form-row">
               <el-form-item label="">
-                <el-input v-model="baseInfo.treatNo" placeholder="处理号" title="处理号"></el-input>
+                <el-input v-model="baseInfo.treatno" placeholder="处理号" title="处理号"></el-input>
               </el-form-item>
               <el-form-item label="">
                 <el-input v-model="baseInfo.stStatus" placeholder="钢包状态" title="钢包状态"></el-input>
@@ -26,7 +26,13 @@
                 <el-input v-model="baseInfo.vacTankTemp" placeholder="温度[℃]" title="温度[℃]"></el-input>
               </el-form-item>
               <el-form-item label="">
-                <el-input v-model="baseInfo.treatStartTm" placeholder="处理开始时刻" title="处理开始时刻"></el-input>
+                <!--<el-input v-model="baseInfo.treatStartTm" placeholder="处理开始时刻" title="处理开始时刻"></el-input>-->
+                <el-date-picker
+                        v-model="baseInfo.treatStartTm"
+                        type="datetime"
+                        placeholder="处理开始时刻"
+                        title="处理开始时刻">
+                </el-date-picker>
               </el-form-item>
             </div>
             <div class="form-row">
@@ -47,7 +53,13 @@
                 <el-input v-model="baseInfo.setO2" placeholder="吹氧量" title="吹氧量"></el-input>
               </el-form-item>
               <el-form-item label="">
-                <el-input v-model="baseInfo.treatEndTm" placeholder="处理结束时刻" title="处理结束时刻"></el-input>
+                <!--<el-input v-model="baseInfo.treatEndTm" placeholder="处理结束时刻" title="处理结束时刻"></el-input>-->
+                <el-date-picker
+                        v-model="baseInfo.treatEndTm"
+                        type="datetime"
+                        placeholder="处理结束时刻"
+                        title="处理结束时刻">
+                </el-date-picker>
               </el-form-item>
             </div>
           </el-form>
@@ -193,7 +205,7 @@ import {
 
 const station = ref( '1' )
 const baseInfo = ref( {
-  treatNo : '',
+  treatno : '',
   stStatus : '',
   vacTankTemp : '',
   alloyAddWeight : '',

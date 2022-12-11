@@ -14,11 +14,11 @@ const getRandomData = ( n, max ) => {
   }else if ( n === 1 ) {
     return Math.floor( Math.random() * max )
   }
-  
+
   return -1
 }
 const getBaseInfo = () => {
-  return { treatNo : '1230023', stno : '', steelWeight : getRandomData( 1, 1000 ), preOxp : '', treatStartTm : '', alloyAddWeight : '', alloyAllCost : '' }
+  return { treatno : '1230023', stno : '', steelWeight : getRandomData( 1, 1000 ), preOxp : '', treatStartTm : '', alloyAddWeight : '', alloyAllCost : '' }
 }
 const getElementInfo = () => {
   return [

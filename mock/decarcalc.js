@@ -47,8 +47,8 @@ const getChart2Data = () => {
   return result
 }
 const getBaseInfo = () => {
-  return { treatNo : getRandomData( 1, 999999 ), treatStartTm : '', steelWeight : '', preC : '', aimCUpper : '',
-    aimCFloor : '', aimC : '', duringCTm : '', duringC : '', steelTemp : '', oxyVal : '', errorMsg : '' }
+  return { treatno : getRandomData( 1, 999999 ), treatStartTm : '', steelWeight : '', preC : '', aimCUpper : '',
+    aimCFloor : '', aimC : '', duringCTm : '', duringC : '', steelTemp : '', oxyVal : '', tips : '' }
 }
 
 export default [

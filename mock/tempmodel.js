@@ -18,7 +18,7 @@ const getRandomData = ( n, max ) => {
   return -1
 }
 const getBaseInfo = () => {
-  return { treatNo : getRandomData( 1, 9999999 ), stStatus : '', vacTankTemp : '', vacTankAlAdd : '', treatStartTm : '', stno : '', steelWeight : getRandomData( 1, 250 ), treatSpan : '', vacTankTempAdd : '', treatEndTm : '' }
+  return { treatno : getRandomData( 1, 9999999 ), stStatus : '', vacTankTemp : '', vacTankAlAdd : '', treatStartTm : '', stno : '', steelWeight : getRandomData( 1, 250 ), treatSpan : '', vacTankTempAdd : '', treatEndTm : '' }
 }
 const getTempData = () => {
   let result = []

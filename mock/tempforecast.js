@@ -14,13 +14,13 @@ const getRandomData = ( n, max ) => {
   }else if ( n === 1 ) {
     return Math.floor( Math.random() * max )
   }
-  
+
   return -1
 }
 // 时间
 const tm = ['13:00', '13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35', '13:40', '13:45', '13:50', '13:55']
 const getBaseInfo = () => {
-  return { treatNo : getRandomData( 1, 999999 ), stStatus : '', vacTankTemp : '', alloyAddWeight : '', treatStartTm : '',
+  return { treatno : getRandomData( 1, 999999 ), stStatus : '', vacTankTemp : '', alloyAddWeight : '', treatStartTm : '',
     stno : '', steelWeight : '', treatSpan : '', setO2 : '', treatEndTm : '' }
 }
 const getAlloyInfoData = () => {

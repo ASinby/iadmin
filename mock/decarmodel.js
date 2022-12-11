@@ -14,13 +14,13 @@ const getRandomData = ( n, max ) => {
   }else if ( n === 1 ) {
     return Math.floor( Math.random() * max )
   }
-  
+
   return -1
 }
 // 时间
 const tm = ['13:00', '13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35', '13:40', '13:45', '13:50', '13:55']
 const getBaseInfo = () => {
-  return { treatNo : getRandomData( 1, 999999 ), stno : getRandomData( 1, 99999 ), treatStartTm : '', aimOXP : '', setO2 : '', blowO2Mode : 1, runTm : getRandomData( 1, 200 ),
+  return { treatno : getRandomData( 1, 999999 ), stno : getRandomData( 1, 99999 ), treatStartTm : '', aimOXP : '', setO2 : '', blowO2Mode : 1, runTm : getRandomData( 1, 200 ),
     forecastO2 : getRandomData( 1, 1000 ), treatSpan : 0, killingC : getRandomData( 1, 200 ), tips : 'hi', preC : '', preOXP : '', aimC : '', steelWeight : getRandomData( 1, 250 ), steelTemp : getRandomData( 1, 5000 ) }
 }
 const getOutCOxygenData = () => {
@@ -49,7 +49,7 @@ const getOutCOxygenData = () => {
       offset1 : 'rgba(245,237,91,0)'
     }]
   }
-  
+
   return result
 }
 export default [
