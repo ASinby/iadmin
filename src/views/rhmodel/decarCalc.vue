@@ -42,10 +42,7 @@
               </el-form-item>
               <el-form-item label="处理开始时刻">
                 <!--<el-input v-model="baseInfo.treatStartTm"></el-input>-->
-                <el-date-picker
-                        v-model="baseInfo.treatStartTm"
-                        type="datetime"
-                        placeholder="处理开始时刻">
+                <el-date-picker v-model="baseInfo.treatStartTm" type="datetime" placeholder="处理开始时刻">
                 </el-date-picker>
               </el-form-item>
               <el-form-item label="钢水重量[kg]">
@@ -65,10 +62,7 @@
               </el-form-item>
               <el-form-item label="过程碳取样时刻">
                 <!--<el-input v-model="baseInfo.duringCTm"></el-input>-->
-                <el-date-picker
-                        v-model="baseInfo.duringCTm"
-                        type="datetime"
-                        placeholder="过程碳取样时刻">
+                <el-date-picker v-model="baseInfo.duringCTm" type="datetime" placeholder="过程碳取样时刻">
                 </el-date-picker>
               </el-form-item>
               <el-form-item label="过程C含量[%]">

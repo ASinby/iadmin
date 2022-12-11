@@ -28,10 +28,11 @@
               <el-form-item label="">
                 <!--<el-input v-model="baseInfo.treatStartTm" placeholder="处理开始时刻" title="处理开始时刻"></el-input>-->
                 <el-date-picker
-                        v-model="baseInfo.treatStartTm"
-                        type="datetime"
-                        placeholder="处理开始时刻"
-                        title="处理开始时刻">
+                  v-model="baseInfo.treatStartTm"
+                  type="datetime"
+                  placeholder="处理开始时刻"
+                  title="处理开始时刻"
+                >
                 </el-date-picker>
               </el-form-item>
             </div>
@@ -55,10 +56,11 @@
               <el-form-item label="">
                 <!--<el-input v-model="baseInfo.treatEndTm" placeholder="处理结束时刻" title="处理结束时刻"></el-input>-->
                 <el-date-picker
-                        v-model="baseInfo.treatEndTm"
-                        type="datetime"
-                        placeholder="处理结束时刻"
-                        title="处理结束时刻">
+                  v-model="baseInfo.treatEndTm"
+                  type="datetime"
+                  placeholder="处理结束时刻"
+                  title="处理结束时刻"
+                >
                 </el-date-picker>
               </el-form-item>
             </div>

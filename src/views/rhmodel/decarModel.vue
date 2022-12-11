@@ -19,10 +19,7 @@
                     </el-form-item>
                     <el-form-item label="开始处理时刻">
                       <!--<el-input v-model="baseInfo.treatStartTm"></el-input>-->
-                      <el-date-picker
-                              v-model="baseInfo.treatStartTm"
-                              type="datetime"
-                              placeholder="开始处理时刻">
+                      <el-date-picker v-model="baseInfo.treatStartTm" type="datetime" placeholder="开始处理时刻">
                       </el-date-picker>
                     </el-form-item>
                     <el-form-item label="目标OXP">
@@ -65,10 +62,7 @@
                   <el-form label-position="right" label-width="100px" :model="baseInfo" style="padding: 5px">
                     <el-form-item label="程序开始时刻">
                       <!--<el-input v-model="baseInfo.runTm"></el-input>-->
-                      <el-date-picker
-                              v-model="baseInfo.runTm"
-                              type="datetime"
-                              placeholder="程序开始时刻">
+                      <el-date-picker v-model="baseInfo.runTm" type="datetime" placeholder="程序开始时刻">
                       </el-date-picker>
                     </el-form-item>
                     <el-form-item label="预报吹氧量">
