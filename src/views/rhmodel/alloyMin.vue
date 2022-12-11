@@ -144,28 +144,43 @@
                 style="width: 100%"
                 height="29vh"
               >
-                <template v-for="(item, index) in headerData" :key="index">
-                  <template v-if="index == 0">
-                    <el-table-column fixed :prop="item" label="料仓号" width="120"> </el-table-column>
-                  </template>
-                  <template v-else>
-                    <el-table-column :prop="item" :label="item" width="120"> </el-table-column>
-                  </template>
-                  <template v-if="index == headerData.length - 1">
-                    <el-table-column fixed="right" label="操作" width="100">
-                      <template #default="scope">
-                        <template v-if="scope.row.rowsHeader === '合金屏蔽' || scope.row.rowsHeader === '设定量'">
-                          <el-button @click="handleUpdateOfCalc(scope.row)" type="text" size="small">编辑</el-button>
-                        </template>
+                <el-table-column v-for="tableHeader in tableHeaders"
+                                 :key="tableHeader.prop"
+                                 :fixed="tableHeader.prop == 'rowsHeader'"
+                                 :prop="tableHeader.prop"
+                                 :label="tableHeader.lable"
+                                 width="150">
+                  <template #default="scope">
+                    <template v-if="scope.row.edit && tableHeader.prop != 'rowsHeader'">
+                      <!--<el-input v-model="scope.row[tableHeader.prop]" class="edit-input" size="small" />-->
+                      <el-switch
+                              v-model="scope.row[tableHeader.prop]"
+                              active-text="屏蔽"
+                              inactive-text="解除"
+                              :active-value="1"
+                              :inactive-value="0"
+                              :width="10">
+                      </el-switch>
+                    </template>
+                    <span v-else>
+                      <template v-if="tableHeader.prop != 'rowsHeader' && scope.row.rowsHeader === '合金屏蔽'">
+                        <el-tag :type="statusFilter(scope.row[tableHeader.prop])">{{ scope.row[tableHeader.prop] === 1?'屏蔽':'解除' }}</el-tag>
                       </template>
-                    </el-table-column>
+                      <template v-else>
+                        {{ scope.row[tableHeader.prop] }}
+                      </template>
+                    </span>
                   </template>
-                </template>
-                <!--<el-table-column
-                        prop="name"
-                        label="温度"
-                        width="120">
-                </el-table-column>-->
+                </el-table-column>
+                <el-table-column fixed="right" label="操作" width="150">
+                  <template #default="scope">
+                    <template v-if="scope.row.rowsHeader === '合金屏蔽' || scope.row.rowsHeader === '设定量'">
+                      <el-button v-if="!scope.row.edit" @click="scope.row.edit = !scope.row.edit" type="text" size="small">编辑</el-button>
+                      <el-button v-if="scope.row.edit" @click="handleUpdateOfCalc(scope.row)" type="text" size="small">保存</el-button>
+                      <el-button v-if="scope.row.edit" @click="cancelEdit(scope.row)" type="text" size="small">取消</el-button>
+                    </template>
+                  </template>
+                </el-table-column>
               </el-table>
             </div>
           </div>
@@ -591,7 +606,7 @@ const elemComs = ref( [
 ] )
 const calcResult = ref( [] )
 // 表头
-const headerData = ref( [] )
+const tableHeaders = ref( [] )
 // 行数据
 const rowsData = ref( [] )
 onMounted( () => {
@@ -655,35 +670,53 @@ async function refreAlloyCalcResult( param ) {
 }
 // 行列置换
 function rowColChange() {
-  // 行头  合金牌名、合金屏蔽、设定量、计算量
-  const rowsHeader = ['matName', 'ifok', 'matSetw', 'matCalw']
-  const rowsHeaderCN = {
-    matName : '合金牌名',
-    ifok : '合金屏蔽',
-    matSetw : '设定量',
-    matCalw : '计算量'
-  }
+  // 行头 列
+  const rowsHeaders = [
+    { colKey : 'matName', rowName : '合金牌名' },
+    { colKey : 'ifok', rowName : '合金屏蔽' },
+    { colKey : 'matSetw', rowName : '设定量' },
+    { colKey : 'matCalw', rowName : '计算量' }
+  ]
   // 1、将 料仓号 作为表头
   const tempHeader = []
-  tempHeader.push( 'rowsHeader' )
-  calcResult.value.forEach( function( value, index ) {
-    tempHeader.push( value.bunkerNo )
+  tempHeader.push( {
+    prop : 'rowsHeader',
+    lable : '料仓号'
   } )
-  headerData.value = tempHeader
+  calcResult.value.forEach( function( value, index ) {
+    tempHeader.push( {
+      prop : value.bunkerNo,
+      lable : value.bunkerNo
+    } )
+  } )
+  tableHeaders.value = tempHeader
 
   // 2、获取行数据
   const tempRows = []
-  rowsHeader.forEach( function( val, ind ) {
+  rowsHeaders.forEach( function( map, n ) {
     const tempRow = {}
     // 设置行头
-    tempRow[tempHeader[0]] = rowsHeaderCN[val]
+    tempRow[tempHeader[0].prop] = map.rowName
     calcResult.value.forEach( function( value, index ) {
-      tempRow[value.bunkerNo] = value[val]
+      tempRow[value.bunkerNo] = value[map.colKey]
     } )
+    // 出现套娃了！！！
+    // tempRow.oldRow = tempRow
+    // 默认不可编辑
+    // tempRow.edit = false
     tempRows.push( tempRow )
   } )
-  // console.log( tempRows )
-  rowsData.value = tempRows
+  console.log( tempRows )
+  // 出现套娃了！！！
+  // rowsData.value = tempRows
+  rowsData.value = tempRows.map( v => {
+    return {
+      ...v,
+      edit : false,
+      oldRow : v
+    }
+  } )
+  console.log( rowsData.value )
 }
 // 查看行数据  合金信息
 function handleUpdate( row ) {
@@ -710,6 +743,23 @@ async function updateData() {
   } catch ( e ) {
   } finally {
   }
+}
+// 取消编辑——回复数据  合金计算结果
+const cancelEdit = row => {
+  console.log( '1', row )
+  // 此处 无法正常取消 问题 ？？？
+  row = row.oldRow
+  console.log( '2', row )
+  row.edit = false
+  console.log( '3', row )
+}
+// 屏蔽/解除
+const statusFilter = status => {
+  const statusMap = {
+    1 : 'danger',
+    0 : 'success'
+  }
+  return statusMap[status]
 }
 // 查看行数据  合金计算结果
 function handleUpdateOfCalc( row ) {

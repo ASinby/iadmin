@@ -20,6 +20,7 @@ const getRandomData = ( n, max ) => {
 const getBaseInfo = () => {
   return { treatno : '1230023', stno : '', steelWeight : getRandomData( 1, 1000 ), preOxp : '', treatStartTm : '', alloyAddWeight : '', alloyAllCost : '' }
 }
+// 元素成分
 const getElementInfo = () => {
   return [
     {
@@ -186,6 +187,241 @@ const getElementInfo = () => {
     }
   ]
 }
+// 合金计算结果表单
+const getAlloyCalcResult = () => {
+  return [
+    {
+      "bunkerNo": "41101",
+      "matCode": "A6034202",
+      "matName": "HI",
+      "matSetw": 123,
+      "ifok": 1,
+      "tm": "18:14",
+      "treatNo": "123001",
+      "matCalw": 111
+    },
+    {
+      "bunkerNo": "41102",
+      "matCode": "A6034208",
+      "matName": null,
+      "matSetw": null,
+      "ifok": 1,
+      "tm": "18:16",
+      "treatNo": "123001",
+      "matCalw": null
+    },
+    {
+      "bunkerNo": "41103",
+      "matCode": "A0",
+      "matName": null,
+      "matSetw": null,
+      "ifok": 0,
+      "tm": "18:16",
+      "treatNo": "123001",
+      "matCalw": null
+    },
+    {
+      "bunkerNo": "41104",
+      "matCode": "A0",
+      "matName": null,
+      "matSetw": null,
+      "ifok": 0,
+      "tm": "18:16",
+      "treatNo": "123001",
+      "matCalw": null
+    },
+    {
+      "bunkerNo": "41105",
+      "matCode": "A6060444",
+      "matName": null,
+      "matSetw": null,
+      "ifok": 1,
+      "tm": "18:16",
+      "treatNo": "123001",
+      "matCalw": null
+    },
+    {
+      "bunkerNo": "41106",
+      "matCode": "A6060444",
+      "matName": null,
+      "matSetw": null,
+      "ifok": 1,
+      "tm": "18:16",
+      "treatNo": "123001",
+      "matCalw": null
+    },
+    {
+      "bunkerNo": "41107",
+      "matCode": "A6030059",
+      "matName": null,
+      "matSetw": null,
+      "ifok": 1,
+      "tm": "18:16",
+      "treatNo": "123001",
+      "matCalw": null
+    },
+    {
+      "bunkerNo": "41108",
+      "matCode": "A0",
+      "matName": null,
+      "matSetw": null,
+      "ifok": 0,
+      "tm": "18:16",
+      "treatNo": "123001",
+      "matCalw": null
+    },
+    {
+      "bunkerNo": "41109",
+      "matCode": "A6030055",
+      "matName": null,
+      "matSetw": null,
+      "ifok": 1,
+      "tm": "18:16",
+      "treatNo": "123001",
+      "matCalw": null
+    },
+    {
+      "bunkerNo": "41110",
+      "matCode": "A6060575",
+      "matName": null,
+      "matSetw": null,
+      "ifok": 1,
+      "tm": "18:16",
+      "treatNo": "123001",
+      "matCalw": null
+    },
+    {
+      "bunkerNo": "41111",
+      "matCode": "A0",
+      "matName": null,
+      "matSetw": null,
+      "ifok": 0,
+      "tm": "18:16",
+      "treatNo": "123001",
+      "matCalw": null
+    },
+    {
+      "bunkerNo": "41112",
+      "matCode": "A0",
+      "matName": null,
+      "matSetw": null,
+      "ifok": 0,
+      "tm": "18:16",
+      "treatNo": "123001",
+      "matCalw": null
+    },
+    {
+      "bunkerNo": "41113",
+      "matCode": "A9999907",
+      "matName": null,
+      "matSetw": null,
+      "ifok": 1,
+      "tm": "18:16",
+      "treatNo": "123001",
+      "matCalw": null
+    },
+    {
+      "bunkerNo": "41114",
+      "matCode": "A6060444",
+      "matName": null,
+      "matSetw": null,
+      "ifok": 1,
+      "tm": "18:16",
+      "treatNo": "123001",
+      "matCalw": null
+    },
+    {
+      "bunkerNo": "41115",
+      "matCode": "A0",
+      "matName": null,
+      "matSetw": null,
+      "ifok": 0,
+      "tm": "18:16",
+      "treatNo": "123001",
+      "matCalw": null
+    },
+    {
+      "bunkerNo": "41116",
+      "matCode": "A0",
+      "matName": null,
+      "matSetw": null,
+      "ifok": 0,
+      "tm": "18:16",
+      "treatNo": "123001",
+      "matCalw": null
+    },
+    {
+      "bunkerNo": "41117",
+      "matCode": "A6030055",
+      "matName": null,
+      "matSetw": null,
+      "ifok": 1,
+      "tm": "18:16",
+      "treatNo": "123001",
+      "matCalw": null
+    },
+    {
+      "bunkerNo": "41118",
+      "matCode": "A9999907",
+      "matName": null,
+      "matSetw": null,
+      "ifok": 1,
+      "tm": "18:16",
+      "treatNo": "123001",
+      "matCalw": null
+    },
+    {
+      "bunkerNo": "41119",
+      "matCode": "A0",
+      "matName": null,
+      "matSetw": null,
+      "ifok": 0,
+      "tm": "18:16",
+      "treatNo": "123001",
+      "matCalw": null
+    },
+    {
+      "bunkerNo": "41120",
+      "matCode": "A0",
+      "matName": null,
+      "matSetw": null,
+      "ifok": 0,
+      "tm": "18:16",
+      "treatNo": "123001",
+      "matCalw": null
+    },
+    {
+      "bunkerNo": "41201",
+      "matCode": "A6060575",
+      "matName": null,
+      "matSetw": null,
+      "ifok": 1,
+      "tm": "18:16",
+      "treatNo": "123001",
+      "matCalw": null
+    },
+    {
+      "bunkerNo": "41202",
+      "matCode": "A0",
+      "matName": null,
+      "matSetw": null,
+      "ifok": 0,
+      "tm": "18:16",
+      "treatNo": "123001",
+      "matCalw": null
+    },
+    {
+      "bunkerNo": "41203",
+      "matCode": "A6030059",
+      "matName": null,
+      "matSetw": null,
+      "ifok": 1,
+      "tm": "18:16",
+      "treatNo": "123001",
+      "matCalw": null
+    }
+  ]
+}
 const updateAlloyCalcResult = () => {
   return ''
 }
@@ -234,7 +470,7 @@ export default [
       return {
         code: 200,
         message: 'success',
-        data: getElementInfo()
+        data: getAlloyCalcResult()
       }
     }
   },
