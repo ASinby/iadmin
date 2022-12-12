@@ -23,7 +23,7 @@
         <size-select id="size-select" class="p8 hover-effect" />
       </el-tooltip>
 
-      <LangSelect class="p8 hover-effect" v-if="false"/>
+      <LangSelect class="p8 hover-effect" v-if="false" />
 
       <el-dropdown class="p8 avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">

@@ -78,11 +78,12 @@
                   </template>
                 </el-table-column>
                 <el-table-column
-                        v-for="tableHeader in elemTableHeaders"
-                        :key="tableHeader.prop"
-                        :prop="tableHeader.prop"
-                        :label="tableHeader.lable"
-                        width="120">
+                  v-for="tableHeader in elemTableHeaders"
+                  :key="tableHeader.prop"
+                  :prop="tableHeader.prop"
+                  :label="tableHeader.lable"
+                  width="120"
+                >
                   <template #default="scope">
                     <template v-if="scope.row.edit && tableHeader.prop != 'flag'">
                       <el-input v-model="scope.row[tableHeader.prop]" class="edit-input" size="small" />
@@ -93,7 +94,13 @@
                 <el-table-column fixed="right" label="操作" width="150">
                   <template #default="scope">
                     <template v-if="scope.row.flag > 4">
-                      <el-button v-if="!scope.row.edit" @click="scope.row.edit = !scope.row.edit" type="primary" size="small">编辑</el-button>
+                      <el-button
+                        v-if="!scope.row.edit"
+                        @click="scope.row.edit = !scope.row.edit"
+                        type="primary"
+                        size="small"
+                        >编辑</el-button
+                      >
                       <template v-else>
                         <el-button @click="handleUpdate(scope.row)" type="success" size="small">保存</el-button>
                         <el-button @click="cancelEdit(scope.row)" type="warning" size="small">取消</el-button>
@@ -149,12 +156,12 @@
                       <!--<el-input v-model="scope.row[tableHeader.prop]" class="edit-input" size="small" />-->
                       <template v-if="scope.row.rowsHeader === '合金屏蔽'">
                         <el-switch
-                                v-model="scope.row[tableHeader.prop]"
-                                active-text="屏蔽"
-                                inactive-text="解除"
-                                :active-value="1"
-                                :inactive-value="0"
-                                :width="30"
+                          v-model="scope.row[tableHeader.prop]"
+                          active-text="屏蔽"
+                          inactive-text="解除"
+                          :active-value="1"
+                          :inactive-value="0"
+                          :width="30"
                         >
                         </el-switch>
                       </template>
@@ -184,10 +191,11 @@
                         size="small"
                         >编辑</el-button
                       >
-                      <el-button v-if="scope.row.edit"
-@click="handleUpdateOfCalc(scope.row)"
-type="success"
-size="small"
+                      <el-button
+                        v-if="scope.row.edit"
+                        @click="handleUpdateOfCalc(scope.row)"
+                        type="success"
+                        size="small"
                         >保存</el-button
                       >
                       <el-button v-if="scope.row.edit"
@@ -211,7 +219,14 @@ size="small"
 <script setup>
 import { onMounted, ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
-import { getBaseInfo, getElementInfo, getAlloyCalcResult, updateElementInfo, updateAlloyCalcResult, doCalc } from '/@/api/alloymin'
+import {
+  getBaseInfo,
+  getElementInfo,
+  getAlloyCalcResult,
+  updateElementInfo,
+  updateAlloyCalcResult,
+  doCalc
+} from '/@/api/alloymin'
 
 const station = ref( '1' )
 // 炉次基本信息
