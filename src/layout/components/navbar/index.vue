@@ -19,11 +19,11 @@
 
       <ScreenFull id="screenfull" class="p8 hover-effect" />
 
-      <el-tooltip content="全局size设置" effect="dark" placement="bottom">
+      <el-tooltip content="全局size设置" effect="dark" placement="bottom" v-if="false">
         <size-select id="size-select" class="p8 hover-effect" />
       </el-tooltip>
 
-      <LangSelect class="p8 hover-effect" />
+      <LangSelect class="p8 hover-effect" v-if="false"/>
 
       <el-dropdown class="p8 avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
@@ -39,16 +39,16 @@
 
         <template #dropdown>
           <el-dropdown-menu>
-            <router-link to="/user/index">
+            <router-link to="/user/index" v-if="false">
               <el-dropdown-item>个人中心</el-dropdown-item>
             </router-link>
             <router-link to="/">
               <el-dropdown-item>首 页</el-dropdown-item>
             </router-link>
-            <a target="_blank" href="https://github.com/mvpyb">
+            <a target="_blank" href="https://github.com/mvpyb" v-if="false">
               <el-dropdown-item>Github</el-dropdown-item>
             </a>
-            <a target="_blank" href="https://gitee.com/simmon_page">
+            <a target="_blank" href="https://gitee.com/simmon_page" v-if="false">
               <el-dropdown-item>码 云</el-dropdown-item>
             </a>
             <el-dropdown-item divided @click="logout">

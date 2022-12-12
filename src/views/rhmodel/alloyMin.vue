@@ -77,35 +77,27 @@
                     {{ getTitle(scope.row.flag) }}
                   </template>
                 </el-table-column>
-                <el-table-column prop="cval" label="C" width="120"> </el-table-column>
-                <el-table-column prop="siVal" label="Si" width="120"> </el-table-column>
-                <el-table-column prop="mnVal" label="Mn" width="120"> </el-table-column>
-                <el-table-column prop="pval" label="P" width="120"> </el-table-column>
-                <el-table-column prop="sval" label="S" width="120"> </el-table-column>
-                <el-table-column prop="mgVal" label="Mg" width="120"> </el-table-column>
-                <el-table-column prop="crVal" label="Cr" width="120"> </el-table-column>
-                <el-table-column prop="niVal" label="Ni" width="120"> </el-table-column>
-                <el-table-column prop="moVal" label="Mo" width="120"> </el-table-column>
-                <el-table-column prop="cuVal" label="Cu" width="120"> </el-table-column>
-                <el-table-column prop="alVal" label="Al" width="120"> </el-table-column>
-                <el-table-column prop="tiVal" label="Ti" width="120"> </el-table-column>
-                <el-table-column prop="vval" label="V" width="120"> </el-table-column>
-                <el-table-column prop="nbVal" label="Nb" width="120"> </el-table-column>
-                <el-table-column prop="wval" label="W" width="120"> </el-table-column>
-                <el-table-column prop="bval" label="B" width="120"> </el-table-column>
-                <el-table-column prop="caVal" label="Ca" width="120"> </el-table-column>
-                <el-table-column prop="sbVal" label="Sb" width="120"> </el-table-column>
-                <el-table-column prop="asVal" label="As" width="120"> </el-table-column>
-                <el-table-column prop="snVal" label="Sn" width="120"> </el-table-column>
-                <el-table-column prop="pbVal" label="Pb" width="120"> </el-table-column>
-                <el-table-column prop="biVal" label="Bi" width="120"> </el-table-column>
-                <el-table-column prop="ceVal" label="Ce" width="120"> </el-table-column>
-                <el-table-column prop="coVal" label="Co" width="120"> </el-table-column>
-                <el-table-column prop="nval" label="N" width="120"> </el-table-column>
-                <el-table-column fixed="right" label="操作" width="100">
+                <el-table-column
+                        v-for="tableHeader in elemTableHeaders"
+                        :key="tableHeader.prop"
+                        :prop="tableHeader.prop"
+                        :label="tableHeader.lable"
+                        width="120">
+                  <template #default="scope">
+                    <template v-if="scope.row.edit && tableHeader.prop != 'flag'">
+                      <el-input v-model="scope.row[tableHeader.prop]" class="edit-input" size="small" />
+                    </template>
+                    <span v-else>{{ scope.row[tableHeader.prop] }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column fixed="right" label="操作" width="150">
                   <template #default="scope">
                     <template v-if="scope.row.flag > 4">
-                      <el-button @click="handleUpdate(scope.row)" type="text" size="small">编辑</el-button>
+                      <el-button v-if="!scope.row.edit" @click="scope.row.edit = !scope.row.edit" type="primary" size="small">编辑</el-button>
+                      <template v-else>
+                        <el-button @click="handleUpdate(scope.row)" type="success" size="small">保存</el-button>
+                        <el-button @click="cancelEdit(scope.row)" type="warning" size="small">取消</el-button>
+                      </template>
                     </template>
                   </template>
                 </el-table-column>
@@ -122,7 +114,7 @@
               <div style="position: absolute; right: 30px; top: 4px">
                 <el-form :inline="true" :model="formOfAl" class="demo-form-inline">
                   <!-- :rules="set.rules" -->
-                  <el-form-item> -屏蔽设1；解除设0- </el-form-item>
+                  <el-form-item v-if="false"> -屏蔽设1；解除设0- </el-form-item>
                   <el-form-item prop="number" label="脱氧铝[kg]">
                     <el-input v-model="formOfAl.deoAl" placeholder="脱氧铝[kg]" title="脱氧铝[kg]"></el-input>
                   </el-form-item>
@@ -145,7 +137,7 @@
                 height="29vh"
               >
                 <el-table-column
-                  v-for="tableHeader in tableHeaders"
+                  v-for="tableHeader in calcTableHeaders"
                   :key="tableHeader.prop"
                   :fixed="tableHeader.prop == 'rowsHeader'"
                   :prop="tableHeader.prop"
@@ -188,19 +180,19 @@
                       <el-button
                         v-if="!scope.row.edit"
                         @click="scope.row.edit = !scope.row.edit"
-                        type="text"
+                        type="primary"
                         size="small"
                         >编辑</el-button
                       >
                       <el-button v-if="scope.row.edit"
 @click="handleUpdateOfCalc(scope.row)"
-type="text"
+type="success"
 size="small"
                         >保存</el-button
                       >
                       <el-button v-if="scope.row.edit"
 @click="cancelEdit(scope.row)"
-type="text"
+type="warning"
 size="small"
                         >取消</el-button
                       >
@@ -213,214 +205,15 @@ size="small"
         </el-col>
       </el-row>
     </div>
-
-    <el-dialog :title="dialogTitle" v-model="dialogFormVisible" width="60%">
-      <el-form :inline="true" :ref="dataForm" :model="dialogData" label-widht="100px">
-        <!-- :rules="set.rules" -->
-        <div class="form-row">
-          <el-form-item prop="cVal" label="C">
-            <el-input v-model="dialogData.cval" placeholder=""></el-input>
-          </el-form-item>
-          <el-form-item prop="siVal" label="Si">
-            <el-input v-model="dialogData.siVal" placeholder=""></el-input>
-          </el-form-item>
-          <el-form-item prop="mnVal" label="Mn">
-            <el-input v-model="dialogData.mnVal" placeholder=""></el-input>
-          </el-form-item>
-          <el-form-item prop="pVal" label="P">
-            <el-input v-model="dialogData.pval" placeholder=""></el-input>
-          </el-form-item>
-        </div>
-        <div class="form-row">
-          <el-form-item prop="sVal" label="S">
-            <el-input v-model="dialogData.sval" placeholder=""></el-input>
-          </el-form-item>
-          <el-form-item prop="mgVal" label="Mg">
-            <el-input v-model="dialogData.mgVal" placeholder=""></el-input>
-          </el-form-item>
-          <el-form-item prop="crVal" label="Cr">
-            <el-input v-model="dialogData.crVal" placeholder=""></el-input>
-          </el-form-item>
-          <el-form-item prop="niVal" label="Ni">
-            <el-input v-model="dialogData.niVal" placeholder=""></el-input>
-          </el-form-item>
-        </div>
-        <div class="form-row">
-          <el-form-item prop="moVal" label="Mo">
-            <el-input v-model="dialogData.moVal" placeholder=""></el-input>
-          </el-form-item>
-          <el-form-item prop="cuVal" label="Cu">
-            <el-input v-model="dialogData.cuVal" placeholder=""></el-input>
-          </el-form-item>
-          <el-form-item prop="alVal" label="Al">
-            <el-input v-model="dialogData.alVal" placeholder=""></el-input>
-          </el-form-item>
-          <el-form-item prop="tiVal" label="Ti">
-            <el-input v-model="dialogData.tiVal" placeholder=""></el-input>
-          </el-form-item>
-        </div>
-        <div class="form-row">
-          <el-form-item prop="vVal" label="V">
-            <el-input v-model="dialogData.vval" placeholder=""></el-input>
-          </el-form-item>
-          <el-form-item prop="nbVal" label="Nb">
-            <el-input v-model="dialogData.nbVal" placeholder=""></el-input>
-          </el-form-item>
-          <el-form-item prop="wVal" label="W">
-            <el-input v-model="dialogData.wval" placeholder=""></el-input>
-          </el-form-item>
-          <el-form-item prop="bVal" label="B">
-            <el-input v-model="dialogData.bval" placeholder=""></el-input>
-          </el-form-item>
-        </div>
-        <div class="form-row">
-          <el-form-item prop="caVal" label="Ca">
-            <el-input v-model="dialogData.caVal" placeholder=""></el-input>
-          </el-form-item>
-          <el-form-item prop="sbVal" label="Sb">
-            <el-input v-model="dialogData.sbVal" placeholder=""></el-input>
-          </el-form-item>
-          <el-form-item prop="asVal" label="As">
-            <el-input v-model="dialogData.asVal" placeholder=""></el-input>
-          </el-form-item>
-          <el-form-item prop="snVal" label="Sn">
-            <el-input v-model="dialogData.snVal" placeholder=""></el-input>
-          </el-form-item>
-        </div>
-        <div class="form-row">
-          <el-form-item prop="pbVal" label="Pb">
-            <el-input v-model="dialogData.pbVal" placeholder=""></el-input>
-          </el-form-item>
-          <el-form-item prop="biVal" label="Bi">
-            <el-input v-model="dialogData.biVal" placeholder=""></el-input>
-          </el-form-item>
-          <el-form-item prop="ceVal" label="Ce">
-            <el-input v-model="dialogData.ceVal" placeholder=""></el-input>
-          </el-form-item>
-          <el-form-item prop="coVal" label="Co">
-            <el-input v-model="dialogData.coVal" placeholder=""></el-input>
-          </el-form-item>
-        </div>
-        <div class="form-row">
-          <el-form-item prop="nval" label="N">
-            <el-input v-model="dialogData.nval" placeholder=""></el-input>
-          </el-form-item>
-        </div>
-      </el-form>
-      <div class="dialog-footer">
-        <el-button @click="hideDialog">取 消</el-button>
-        <el-button type="primary" @click="updateData">确 定</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { nextTick, onMounted, ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
-import { getBaseInfo, getElementInfo, getAlloyCalcResult, updateElementInfo, doCalc } from '/@/api/alloymin'
+import { getBaseInfo, getElementInfo, getAlloyCalcResult, updateElementInfo, updateAlloyCalcResult, doCalc } from '/@/api/alloymin'
 
-// 配置
-// const set = reactive( {
-//   rules : {
-//     cVal : [
-//       { required : true, message : '不可为空', trigger : 'blur' },
-//       { type : 'number', message : '必须为数字值', trigger : 'change' }
-//     ],
-//     siVal : [
-//       { required : true, message : '不可为空', trigger : 'blur' },
-//       { type : 'number', message : '必须为数字值', trigger : 'change' }
-//     ],
-//     mnVal : [
-//       { required : true, message : '不可为空', trigger : 'blur' },
-//       { type : 'number', message : '必须为数字值', trigger : 'change' }
-//     ],
-//     pVal : [
-//       { required : true, message : '不可为空', trigger : 'blur' },
-//       { type : 'number', message : '必须为数字值', trigger : 'change' }
-//     ],
-//     sVal : [
-//       { required : true, message : '不可为空', trigger : 'blur' },
-//       { type : 'number', message : '必须为数字值', trigger : 'change' }
-//     ],
-//     mgVal : [
-//       { required : true, message : '不可为空', trigger : 'blur' },
-//       { type : 'number', message : '必须为数字值', trigger : 'change' }
-//     ],
-//     crVal : [
-//       { required : true, message : '不可为空', trigger : 'blur' },
-//       { type : 'number', message : '必须为数字值', trigger : 'change' }
-//     ],
-//     niVal : [
-//       { required : true, message : '不可为空', trigger : 'blur' },
-//       { type : 'number', message : '必须为数字值', trigger : 'change' }
-//     ],
-//     moVal : [
-//       { required : true, message : '不可为空', trigger : 'blur' },
-//       { type : 'number', message : '必须为数字值', trigger : 'change' }
-//     ],
-//     cuVal : [
-//       { required : true, message : '不可为空', trigger : 'blur' },
-//       { type : 'number', message : '必须为数字值', trigger : 'change' }
-//     ],
-//     alVal : [
-//       { required : true, message : '不可为空', trigger : 'blur' },
-//       { type : 'number', message : '必须为数字值', trigger : 'change' }
-//     ],
-//     tiVal : [
-//       { required : true, message : '不可为空', trigger : 'blur' },
-//       { type : 'number', message : '必须为数字值', trigger : 'change' }
-//     ],
-//     vVal : [
-//       { required : true, message : '不可为空', trigger : 'blur' },
-//       { type : 'number', message : '必须为数字值', trigger : 'change' }
-//     ],
-//     nbVal : [
-//       { required : true, message : '不可为空', trigger : 'blur' },
-//       { type : 'number', message : '必须为数字值', trigger : 'change' }
-//     ],
-//     wVal : [
-//       { required : true, message : '不可为空', trigger : 'blur' },
-//       { type : 'number', message : '必须为数字值', trigger : 'change' }
-//     ],
-//     bVal : [
-//       { required : true, message : '不可为空', trigger : 'blur' },
-//       { type : 'number', message : '必须为数字值', trigger : 'change' }
-//     ],
-//     caVal : [
-//       { required : true, message : '不可为空', trigger : 'blur' },
-//       { type : 'number', message : '必须为数字值', trigger : 'change' }
-//     ],
-//     sbVal : [
-//       { required : true, message : '不可为空', trigger : 'blur' },
-//       { type : 'number', message : '必须为数字值', trigger : 'change' }
-//     ],
-//     asVal : [
-//       { required : true, message : '不可为空', trigger : 'blur' },
-//       { type : 'number', message : '必须为数字值', trigger : 'change' }
-//     ],
-//     snVal : [
-//       { required : true, message : '不可为空', trigger : 'blur' },
-//       { type : 'number', message : '必须为数字值', trigger : 'change' }
-//     ],
-//     pbVal : [
-//       { required : true, message : '不可为空', trigger : 'blur' },
-//       { type : 'number', message : '必须为数字值', trigger : 'change' }
-//     ],
-//     biVal : [
-//       { required : true, message : '不可为空', trigger : 'blur' },
-//       { type : 'number', message : '必须为数字值', trigger : 'change' }
-//     ],
-//     ceVal : [
-//       { required : true, message : '不可为空', trigger : 'blur' },
-//       { type : 'number', message : '必须为数字值', trigger : 'change' }
-//     ]
-//   }
-// } )
-// 工位点
 const station = ref( '1' )
-// const elemName = { cVal : 'C', siVal : 'Si', mnVal : 'Mn', pVal : 'P', sVal : 'S', mgVal : 'Mg', crVal : 'Cr', niVal : 'Ni', moVal : 'Mo', cuVal : 'Cu', alVal : 'Al',
-//   tiVal : 'Ti', vVal  : 'V', nbVal : 'Nb', wVal  : 'W', bVal  : 'B', caVal : 'Ca', sbVal : 'Sb', asVal : 'As', snVal : 'Sn', pbVal : 'Pb', biVal : 'Bi', ceVal : 'Ce' }
 // 炉次基本信息
 const baseInfo = ref( {
   treatno : '123001',
@@ -433,39 +226,7 @@ const baseInfo = ref( {
 } )
 // 脱氧铝、加热铝
 const formOfAl = ref( { deoAl : '', heatAl : '' } )
-// 弹窗是否显示标志 元素
-const dialogFormVisible = ref( false )
-// 弹窗标题
-const dialogTitle = ref( '' )
 
-const dataForm = ref( null )
-const dialogData = ref( {
-  flag : '1',
-  title : '',
-  cVal : 1,
-  siVal : 1,
-  mnVal : 1,
-  pVal : 1,
-  sVal : 1,
-  mgVal : 1,
-  crVal : 1,
-  niVal : 1,
-  moVal : 1,
-  cuVal : 1,
-  alVal : 1,
-  tiVal : 1,
-  vVal : 1,
-  nbVal : 1,
-  wVal : 1,
-  bVal : 1,
-  caVal : 1,
-  sbVal : 1,
-  asVal : 1,
-  snVal : 1,
-  pbVal : 1,
-  biVal : 1,
-  ceVal : 1
-} )
 const elemComs = ref( [
   {
     flag : '1',
@@ -630,9 +391,11 @@ const elemComs = ref( [
     ceVal : 1
   }
 ] )
+const elemTableHeaders = ref( [] )
+
 const calcResult = ref( [] )
 // 表头
-const tableHeaders = ref( [] )
+const calcTableHeaders = ref( [] )
 // 行数据
 const rowsData = ref( [] )
 onMounted( () => {
@@ -646,11 +409,6 @@ function init() {
   refreBaseInfo( param )
   refreElementInfo( param )
   refreAlloyCalcResult( param )
-}
-
-// 隐藏弹窗
-const hideDialog = () => {
-  dialogFormVisible.value = false
 }
 
 watch( station, newX => {
@@ -687,7 +445,48 @@ async function refreBaseInfo( param ) {
 }
 async function refreElementInfo( param ) {
   const { data } = await getElementInfo( param )
-  elemComs.value = { data }.data
+  const items = { data }.data
+
+  elemComs.value = items.map( v => {
+    return {
+      ...v,
+      edit : false,
+      oldRow : v
+    }
+  } )
+  console.log( elemComs.value )
+  getElemHeaders()
+}
+function getElemHeaders() {
+  const tempHeaders = []
+
+  console.log( elemComs.value.length )
+  console.log( elemComs.value[0] )
+  if ( elemComs.value.length > 0 ) {
+    for ( const key in elemComs.value[0] ) {
+      let label = key
+
+      if ( label.indexOf( 'val' ) == -1 && label.indexOf( 'Val' ) == -1 ) {
+        continue
+      }
+
+      // 将 val 或者 Val 替换成 "" , 获取元素名
+      const regExp = /val|Val/g
+      label = label.replace( regExp, '' )
+
+      // 将元素名首字母大写
+      const character = [...label]
+      character[0] = character[0].toUpperCase()
+      label = character.join( '' )
+
+      tempHeaders.push( {
+        prop : key,
+        lable : label
+      } )
+    }
+  }
+  console.log( 'headers', tempHeaders )
+  elemTableHeaders.value = tempHeaders
 }
 async function refreAlloyCalcResult( param ) {
   const { data } = await getAlloyCalcResult( param )
@@ -715,7 +514,7 @@ function rowColChange() {
       lable : value.bunkerNo
     } )
   } )
-  tableHeaders.value = tempHeader
+  calcTableHeaders.value = tempHeader
 
   // 2、获取行数据
   const tempRows = []
@@ -725,14 +524,12 @@ function rowColChange() {
     tempRow[tempHeader[0].prop] = map.rowName
     calcResult.value.forEach( function( value, index ) {
       tempRow[value.bunkerNo] = value[map.colKey]
+      tempRow.treatNo = value.treatNo
     } )
-    // 出现套娃了！！！
-    // tempRow.oldRow = tempRow
-    // 默认不可编辑
-    // tempRow.edit = false
+    tempRow.fieldName = map.colKey
     tempRows.push( tempRow )
   } )
-  console.log( tempRows )
+  // console.log( tempRows )
   // 出现套娃了！！！
   // rowsData.value = tempRows
   rowsData.value = tempRows.map( v => {
@@ -742,25 +539,12 @@ function rowColChange() {
       oldRow : v
     }
   } )
-  console.log( rowsData.value )
-}
-// 查看行数据  合金信息
-function handleUpdate( row ) {
-  // console.log( row )
-  dialogData.value = row
-  dialogTitle.value = row.title
-  dialogFormVisible.value = true
-  nextTick( () => {
-    dataForm.value && dataForm.value.clearValidate()
-  } )
 }
 // 修改合金信息
-async function updateData() {
-  // console.log( dialogData.value )
+async function handleUpdate( row ) {
   try {
-    const { data } = await updateElementInfo( dialogData.value )
+    const { data } = await updateElementInfo( row )
     elemComs.value = { data }.data
-    dialogFormVisible.value = false
     ElMessage( {
       message : '修改成功',
       type : 'success',
@@ -772,12 +556,13 @@ async function updateData() {
 }
 // 取消编辑——回复数据  合金计算结果
 const cancelEdit = row => {
-  console.log( '1', row )
-  // 此处 无法正常取消 问题 ？？？
-  row = row.oldRow
-  console.log( '2', row )
+  const tt = row.oldRow
+
+  // 解决取消编辑 无法恢复数据问题
+  for ( const key in tt ) {
+    row[key] = tt[key]
+  }
   row.edit = false
-  console.log( '3', row )
 }
 // 屏蔽/解除
 const statusFilter = status => {
@@ -787,20 +572,21 @@ const statusFilter = status => {
   }
   return statusMap[status]
 }
-// 查看行数据  合金计算结果
-function handleUpdateOfCalc( row ) {
+// 修改合金计算结果
+async function handleUpdateOfCalc( row ) {
   console.log( row )
+  await updateAlloyCalcResult( row )
   ElMessage( {
-    message : '暂无开发完成，稍后再试。',
-    type : 'info',
+    message : '修改成功',
+    type : 'success',
     duration : 3 * 1000
   } )
-  // dialogData.value = row
-  // dialogTitle.value = row.title
-  // dialogFormVisible.value = true
-  // nextTick( () => {
-  //   dataForm.value && dataForm.value.clearValidate()
-  // } )
+  row.edit = false
+  // 刷新
+  const param = {
+    station1 : station.value
+  }
+  refreAlloyCalcResult( param )
 }
 // 行类型
 function getTitle( flag ) {
