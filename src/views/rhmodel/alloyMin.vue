@@ -155,15 +155,20 @@
                   <template #default="scope">
                     <template v-if="scope.row.edit && tableHeader.prop != 'rowsHeader'">
                       <!--<el-input v-model="scope.row[tableHeader.prop]" class="edit-input" size="small" />-->
-                      <el-switch
-                        v-model="scope.row[tableHeader.prop]"
-                        active-text="屏蔽"
-                        inactive-text="解除"
-                        :active-value="1"
-                        :inactive-value="0"
-                        :width="10"
-                      >
-                      </el-switch>
+                      <template v-if="scope.row.rowsHeader === '合金屏蔽'">
+                        <el-switch
+                                v-model="scope.row[tableHeader.prop]"
+                                active-text="屏蔽"
+                                inactive-text="解除"
+                                :active-value="1"
+                                :inactive-value="0"
+                                :width="30"
+                        >
+                        </el-switch>
+                      </template>
+                      <template v-else>
+                        <el-input v-model="scope.row[tableHeader.prop]" class="edit-input" size="small" />
+                      </template>
                     </template>
                     <span v-else>
                       <template v-if="tableHeader.prop != 'rowsHeader' && scope.row.rowsHeader === '合金屏蔽'">
